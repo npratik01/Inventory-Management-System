@@ -1,6 +1,8 @@
 from tkinter import*
 from PIL import Image, ImageTk
-from tkinter import ttk
+from tkinter import ttk,messagebox
+import sqlite3
+
 class memberClass:
     def __init__(self, root):
         self.root = root
@@ -69,7 +71,7 @@ class memberClass:
 
 
         #==== Buttons =====
-        btn_add = Button(self.root,text="Save",font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=500,y=305,width=110,height=28)
+        btn_add = Button(self.root,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=500,y=305,width=110,height=28)
         btn_update = Button(self.root,text="Update",font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=620,y=305,width=110,height=28)
         btn_delete = Button(self.root,text="Delete",font=("goudy old style",15),bg="#f44336",fg="white",cursor="hand2").place(x=740,y=305,width=110,height=28)
         btn_clear = Button(self.root,text="Clear",font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=860,y=305,width=110,height=28)
@@ -110,7 +112,35 @@ class memberClass:
 
         self.MemberTable.pack(fill=BOTH,expand=1)
 
+#=====================================================================
 
+    def add(self):
+        con=sqlite3.connect(database='ims.db')
+        cur=con.cursor()
+        try:
+            if self.var_mem_prn.get()=="":
+                messagebox.showerror("Error","Member ID Must be required",parent=self.root)
+            else:
+                cur.execute("SELECT * FROM member WHERE memid=?",(self.var_mem_prn.get(),))
+                row=cur.fetchone()
+                if row != None:
+                    messagebox.showerror("Error", "This Member ID already assigned , try different",parent=self.root)
+                else:
+                    cur.execute("Insert into member (memid,name,email,gender,contact,dob,pass,utype) values(?,?,?,?,?,?,?,?)",(
+                        self.var_mem_prn.get(),
+                        self.var_mem_name.get(),
+                        self.var_mem_email.get(),
+                        self.var_mem_gender.get(),
+                        self.var_mem_contact.get(),
+                        self.var_mem_dob.get(),
+                        self.var_mem_pass.get(),
+                        self.var_mem_usertype.get()
+                    ))
+                    con.commit()
+                    messagebox.showinfo("Success","Member Added Successfully",parent=self.root)
+                
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
 
 
 

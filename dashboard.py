@@ -1,6 +1,9 @@
 from tkinter import*
 from PIL import Image, ImageTk
 from member import memberClass
+
+
+
 class IMS:
     def __init__(self, root):
         self.root = root
@@ -71,6 +74,11 @@ class IMS:
     def member(self):
         self.new_win=Toplevel(self.root)
         self.new_obj = memberClass(self.new_win)
+
+#=========================================================================================================================================================================================
+
+    
+
 
 if __name__ == "__main__":
     root = Tk()
