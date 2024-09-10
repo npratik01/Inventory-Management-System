@@ -39,11 +39,11 @@ class IMS:
 
         lbl_menu = Label(LeftMenu, text="Menu", font=("times new roman", 20), bg = "#009688").pack(side=TOP,fill=X)
         btn_employee = Button(LeftMenu, text="Members",command=self.member, font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
-        btn_employee = Button(LeftMenu, text="Supplier", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
-        btn_employee = Button(LeftMenu, text="Products", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
-        btn_employee = Button(LeftMenu, text="Sales", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
-        btn_employee = Button(LeftMenu, text="Category", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
+        btn_employee = Button(LeftMenu, text="Components", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
+        btn_employee = Button(LeftMenu, text="Abount Us", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         btn_employee = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
+        # btn_employee = Button(LeftMenu, text="Category", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
+        # btn_employee = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
 
 
         # ===== Content =====
