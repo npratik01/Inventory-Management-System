@@ -1,6 +1,8 @@
 from tkinter import*
 from PIL import Image, ImageTk
 from member import memberClass
+from product import productClass
+
 
 
 
@@ -42,7 +44,7 @@ class IMS:
 
         lbl_menu = Label(LeftMenu, text="Menu", font=("times new roman", 20), bg = "#009688").pack(side=TOP,fill=X)
         btn_employee = Button(LeftMenu, text="Members",command=self.member, font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
-        btn_employee = Button(LeftMenu, text="Components", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
+        btn_employee = Button(LeftMenu, text="Product",command=self.product, font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         btn_employee = Button(LeftMenu, text="Abount Us", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         btn_employee = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         # btn_employee = Button(LeftMenu, text="Category", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
@@ -77,6 +79,9 @@ class IMS:
 
 #=========================================================================================================================================================================================
 
+    def product(self):
+        self.new_win=Toplevel(self.root)
+        self.new_obj = productClass(self.new_win)
     
 
 
