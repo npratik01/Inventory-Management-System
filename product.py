@@ -13,7 +13,7 @@ class productClass:
         self.root.focus_force()
         #============================================
 
-
+        product_Frame=Frame(self.root,bd=3,relief=RIDGE)
 
 
 
