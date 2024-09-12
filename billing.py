@@ -28,9 +28,15 @@ class BilliClass:
 #==========Product Frame =================================================================================================================================================================================
 
         ProductFrame1 = Frame(self.root,bd=4,relief=RIDGE,bg="white")
-        ProductFrame1.place(x=10,y=110,width=410,height=550)
+        ProductFrame1.place(x=6,y=110,width=410,height=550)
 
         pTitle=Label(ProductFrame1,text="All Products",font=("goudy old style",20,"bold"),bg="#262626",fg="white").pack(side=TOP,fill=X)
+
+        ProductFrame2 = Frame(ProductFrame1,bd=2,relief=RIDGE,bg="white")
+        ProductFrame2.place(x=2,y=42,width=398,height=90)
+
+        lbl_search=Label(ProductFrame2,text="Search Product | By Name",font=("times new roman",15,"bold"),bg="white",fg="green").place(x=2,y=5)
+
 
 if __name__ == "__main__":
     root = Tk()
