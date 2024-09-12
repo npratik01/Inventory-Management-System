@@ -74,7 +74,7 @@ class memberClass:
         btn_add = Button(self.root,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=500,y=305,width=110,height=28)
         btn_update = Button(self.root,text="Update",command=self.update,font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=620,y=305,width=110,height=28)
         btn_delete = Button(self.root,text="Delete",command=self.delete,font=("goudy old style",15),bg="#f44336",fg="white",cursor="hand2").place(x=740,y=305,width=110,height=28)
-        btn_clear = Button(self.root,text="Clear",font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=860,y=305,width=110,height=28)
+        btn_clear = Button(self.root,text="Clear",command=self.clear,font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=860,y=305,width=110,height=28)
 
 
         #==== Member Details =====
@@ -209,7 +209,8 @@ class memberClass:
                 
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
-    
+#============ DELETE Button =========================================================================
+
     def delete(self):
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
@@ -223,22 +224,29 @@ class memberClass:
                     messagebox.showerror("Error", "Invalid Member ID",parent=self.root)
                 else:
                     op=messagebox.askyesno("Confirm", "Do you really want to delete ?",parent=self.root)
-                    cur.execute("delete from member where memid=? ",(self.var_mem_prn.get(),))
-                    con.commit()
-                    messagebox.showinfo("Delete","Member Deleted Successfully",parent=self.root)
-                    self.show()
+                    if op == True:
+                        cur.execute("delete from member where memid=? ",(self.var_mem_prn.get(),))
+                        con.commit()
+                        messagebox.showinfo("Delete","Member Deleted Successfully",parent=self.root)
+                        self.clear()
+
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
 
+#======= Clear Button ================================================================================================
+
     def clear(self):
-        self.var_mem_prn.set("")
+        self.var_mem_prn.set(r"")
         self.var_mem_name.set("")
         self.var_mem_email.set("")
-        self.var_mem_gender.set("")
+        self.var_mem_gender.set("Select")
         self.var_mem_contact.set("")
         self.var_mem_dob.set("")
         self.var_mem_pass.set("")
-        self.var_mem_usertype.set("")
+        self.var_mem_usertype.set("Admin")
+        self.show()
+
+#======= Search Button ===============================
 
 if __name__ == "__main__":
     root = Tk()
