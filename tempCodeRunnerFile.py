@@ -1,1 +1,1 @@
-"name","email","gender","contact","dob","pass","utype"
+        # print(row)

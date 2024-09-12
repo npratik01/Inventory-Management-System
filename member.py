@@ -72,7 +72,7 @@ class memberClass:
 
         #==== Buttons =====
         btn_add = Button(self.root,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=500,y=305,width=110,height=28)
-        btn_update = Button(self.root,text="Update",font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=620,y=305,width=110,height=28)
+        btn_update = Button(self.root,text="Update",command=self.update,font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=620,y=305,width=110,height=28)
         btn_delete = Button(self.root,text="Delete",font=("goudy old style",15),bg="#f44336",fg="white",cursor="hand2").place(x=740,y=305,width=110,height=28)
         btn_clear = Button(self.root,text="Clear",font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=860,y=305,width=110,height=28)
 
@@ -109,8 +109,10 @@ class memberClass:
         self.MemberTable.column("dob",width=100)
         self.MemberTable.column("pass",width=100)
         self.MemberTable.column("utype",width=100)
-
         self.MemberTable.pack(fill=BOTH,expand=1)
+        self.MemberTable.bind("<ButtonRelease-1>",self.get_data)
+
+        self.show()
 
 #=====================================================================
 
@@ -138,10 +140,95 @@ class memberClass:
                     ))
                     con.commit()
                     messagebox.showinfo("Success","Member Added Successfully",parent=self.root)
+                    self.show()
+
                 
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+            
 
+    def show(self):
+        con=sqlite3.connect(database='ims.db')
+        cur=con.cursor()
+        try:
+            cur.execute("select * from member")
+            rows=cur.fetchall()
+            self.MemberTable.delete(*self.MemberTable.get_children())
+            for row in rows:
+                self.MemberTable.insert('',END,values=row)
+
+
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+            
+
+    def get_data(self,ev):
+        f=self.MemberTable.focus()
+        content=(self.MemberTable.item(f))
+        row=content['values']
+        # print(row)
+        self.var_mem_prn.set(row[0])
+        self.var_mem_name.set(row[1])
+        self.var_mem_email.set(row[2])
+        self.var_mem_gender.set(row[3])
+        self.var_mem_contact.set(row[4])
+        self.var_mem_dob.set(row[5])
+        self.var_mem_pass.set(row[6])
+        self.var_mem_usertype.set(row[7])
+
+
+#======== UPDATE DATA =======================================================================================
+
+    def update(self):
+        con=sqlite3.connect(database='ims.db')
+        cur=con.cursor()
+        try:
+            if self.var_mem_prn.get()=="":
+                messagebox.showerror("Error","Member ID Must be required",parent=self.root)
+            else:
+                cur.execute("SELECT * FROM member WHERE memid=?",(self.var_mem_prn.get(),))
+                row=cur.fetchone()
+                if row == None:
+                    messagebox.showerror("Error", "Invalid Member ID",parent=self.root)
+                else:
+                    cur.execute("Update member set name=?,email=?,gender=?,contact=?,dob=?,pass=?,utype=? where memid=?",(
+                
+                        self.var_mem_name.get(),
+                        self.var_mem_email.get(),
+                        self.var_mem_gender.get(),
+                        self.var_mem_contact.get(),
+                        self.var_mem_dob.get(),
+                        self.var_mem_pass.get(),
+                        self.var_mem_usertype.get(),
+                        self.var_mem_prn.get()
+                    ))
+                    con.commit()
+                    messagebox.showinfo("Success","Member Updated Successfully",parent=self.root)
+                    self.show()
+
+                
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+    
+    def delete(self):
+        con=sqlite3.connect(database='ims.db')
+        cur=con.cursor()
+        try:
+            if self.var_mem_prn.get()=="":
+                messagebox.showerror("Error","Member ID Must be required",parent=self.root)
+            else:
+                cur.execute("SELECT * FROM member WHERE memid=?",(self.var_mem_prn.get(),))
+                row=cur.fetchone()
+                if row == None:
+                    messagebox.showerror("Error", "Invalid Member ID",parent=self.root)
+                else:
+                    op=messagebox.askyesno("Confirm", "Do you really want to delete ?",parent=self.root)
+                    cur.execute("delete from member where memid=? ",(self.var_mem_prn.get(),))
+                    con.commit()
+                    messagebox.showinfo("Delete","Member Deleted Successfully",parent=self.root)
+
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
 
 
 if __name__ == "__main__":
