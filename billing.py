@@ -26,7 +26,7 @@ class BilliClass:
         self.lbl_clock.place(x = 0, y = 70, relwidth=1, height= 30)
 
 #==========Product Frame =================================================================================================================================================================================
-
+        self.var_search=StringVar()
         ProductFrame1 = Frame(self.root,bd=4,relief=RIDGE,bg="white")
         ProductFrame1.place(x=6,y=110,width=410,height=550)
 
@@ -36,6 +36,15 @@ class BilliClass:
         ProductFrame2.place(x=2,y=42,width=398,height=90)
 
         lbl_search=Label(ProductFrame2,text="Search Product | By Name",font=("times new roman",15,"bold"),bg="white",fg="green").place(x=2,y=5)
+
+        lbl_search=Label(ProductFrame2,text="Product Name",font=("times new roman",15,"bold"),bg="white").place(x=2,y=43)
+        txt_search=Entry(ProductFrame2,textvariable=self.var_search,font=("times new roman",15,),bg="lightyellow").place(x=130,y=47,width=150,height=22)
+        btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
+        btn_showAll=Button(ProductFrame2,text="Show All",font=("goudy old style",15),bg="#083531",fg="white",cursor="hand2").place(x=285,y=10,width=100,height=25)
+
+        
+
+
 
 
 if __name__ == "__main__":
