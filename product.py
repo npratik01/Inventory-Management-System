@@ -102,36 +102,40 @@ class productClass:
         scrolly = Scrollbar(p_frame,orient=VERTICAL)
         scrollx = Scrollbar(p_frame,orient=HORIZONTAL)
         
-        self.product_tabel=ttk.Treeview(p_frame,columns=("Product Name","Invoice number","Invoice date","Price",
-    "Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No",
-    "Current position","current Mo no"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.product_tabel=ttk.Treeview(p_frame,columns=("Product Name","Invoice number","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.product_tabel.xview)
         scrolly.config(command=self.product_tabel.yview)
-        self.product_tabel.heading("Product Name",text="Member ID")
-        self.product_tabel.heading("Invoice number",text="Name")
-        self.product_tabel.heading("Invoice date",text="Email")
+        self.product_tabel.heading("Product Name",text="Product Name")
+        self.product_tabel.heading("Invoice number",text="Invoice number")
+        self.product_tabel.heading("Invoice date",text="Invoice date")
         self.product_tabel.heading("Price",text="Gender")
-        self.product_tabel.heading("Total Invoice Amount",text="Contact")
-        self.product_tabel.heading("Supplier Name",text="DOB")
-        self.product_tabel.heading("Vendor MO NO",text="Password")
-        self.product_tabel.heading("Email of vendor",text="User Type")
-        self.product_tabel.heading("R Student Name",text="User Type")
-        self.product_tabel.heading("R Std Mo NoE",text="User Type")
-        self.product_tabel.heading("Current positionE",text="User Type")
-        self.product_tabel.heading("Ecurrent Mo no",text="User Type")
+        self.product_tabel.heading("Total Invoice Amount",text="Total Invoice Amount")
+        self.product_tabel.heading("Supplier Name",text="Supplier Name")
+        self.product_tabel.heading("Vendor MO NO",text="Vendor MO NO")
+        self.product_tabel.heading("Email of vendor",text="Email of vendor")
+        self.product_tabel.heading("R Student Name",text="R Student Name")
+        self.product_tabel.heading("R Std Mo No",text="R Std Mo No")
+        self.product_tabel.heading("Current position",text="Current position")
+        self.product_tabel.heading("Current Mo No",text="UEcurrent Mo no")
+
+        
 
         self.product_tabel["show"]="headings"
 
-        self.product_tabel.column("memid",width=90)
-        self.product_tabel.column("name",width=100)
-        self.product_tabel.column("email",width=100)
-        self.product_tabel.column("gender",width=100)
-        self.product_tabel.column("contact",width=100)
-        self.product_tabel.column("dob",width=100)
-        self.product_tabel.column("pass",width=100)
-        self.product_tabel.column("utype",width=100)
+        self.product_tabel.column("Product Name",width=90)
+        self.product_tabel.column("Invoice number",width=100)
+        self.product_tabel.column("Invoice date",width=100)
+        self.product_tabel.column("Price",width=100)
+        self.product_tabel.column("Total Invoice Amount",width=100)
+        self.product_tabel.column("Supplier Name",width=100)
+        self.product_tabel.column("Vendor MO NO",width=100)
+        self.product_tabel.column("Email of vendor",width=100)
+        self.product_tabel.column("R Student Name",width=100)
+        self.product_tabel.column("R Std Mo No",width=100)
+        self.product_tabel.column("Current position",width=100)
+        self.product_tabel.column("Current Mo No",width=100)
         self.product_tabel.pack(fill=BOTH,expand=1)
         self.product_tabel.bind("<ButtonRelease-1>",self.get_data)
 
@@ -189,15 +193,27 @@ class productClass:
         content=(self.product_tabel.item(f))
         row=content['values']
         # print(row)
-        self.var_mem_prn.set(row[0])
-        self.var_mem_name.set(row[1])
-        self.var_mem_email.set(row[2])
-        self.var_mem_gender.set(row[3])
-        self.var_mem_contact.set(row[4])
-        self.var_mem_dob.set(row[5])
-        self.var_mem_pass.set(row[6])
-        self.var_mem_usertype.set(row[7])
 
+
+        # Updated get_data method
+    def get_data(self, ev):
+        f = self.product_tabel.focus()
+        content = self.product_tabel.item(f)
+        row = content['values']
+        # if row:
+        # Assuming correct order and existing database schema alignment
+        self.var_cat.set(row[0])
+        self.var_invoice_no.set(row[1])
+        self.var_invoice_date.set(row[2])
+        self.var_price_item.set(row[3])
+        self.var_inovice_amount.set(row[4])
+        self.var_supp_name.set(row[5])
+        self.var_mo_no.set(row[6])
+        self.var_email_vendor.set(row[7])
+        self.var_received_std_name.set(row[8])
+        self.var_received_mo_no.set(row[9])
+        self.var_curr_posi.set(row[10])
+        self.var_curr_mo_no.set(row[11])
 
 #======== UPDATE DATA =======================================================================================
 
