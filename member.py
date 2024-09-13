@@ -34,7 +34,7 @@ class memberClass:
         cmb_search.current(0)
 
         txt_search=Entry(SearchFrame,textvariable=self.var_mem_searchtxt,font=("goudy old style",15),bg="lightyellow").place(x=200,y=10)
-        btn_search = Button(SearchFrame,text="Search",font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=410,y=8,width=150,height=30)
+        btn_search = Button(SearchFrame,text="Search",command=self.search,font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=410,y=8,width=150,height=30)
 
         #===== Title =====
         title = Label(self.root,text="Member Details",font=("goudy old style",15),bg="#0f4d7d",fg="white",).place(x=50,y=100,width=1000)
@@ -74,7 +74,7 @@ class memberClass:
         btn_add = Button(self.root,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=500,y=305,width=110,height=28)
         btn_update = Button(self.root,text="Update",command=self.update,font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=620,y=305,width=110,height=28)
         btn_delete = Button(self.root,text="Delete",command=self.delete,font=("goudy old style",15),bg="#f44336",fg="white",cursor="hand2").place(x=740,y=305,width=110,height=28)
-        btn_clear = Button(self.root,text="Clear",font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=860,y=305,width=110,height=28)
+        btn_clear = Button(self.root,text="Clear",command=self.clear,font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=860,y=305,width=110,height=28)
 
 
         #==== Member Details =====
@@ -209,7 +209,8 @@ class memberClass:
                 
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
-    
+#============ DELETE Button =========================================================================
+
     def delete(self):
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
@@ -223,22 +224,55 @@ class memberClass:
                     messagebox.showerror("Error", "Invalid Member ID",parent=self.root)
                 else:
                     op=messagebox.askyesno("Confirm", "Do you really want to delete ?",parent=self.root)
-                    cur.execute("delete from member where memid=? ",(self.var_mem_prn.get(),))
-                    con.commit()
-                    messagebox.showinfo("Delete","Member Deleted Successfully",parent=self.root)
-                    self.show()
+                    if op == True:
+                        cur.execute("delete from member where memid=? ",(self.var_mem_prn.get(),))
+                        con.commit()
+                        messagebox.showinfo("Delete","Member Deleted Successfully",parent=self.root)
+                        self.clear()
+
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
 
+#======= Clear Button ================================================================================================
+
     def clear(self):
-        self.var_mem_prn.set("")
+        self.var_mem_prn.set(r"")
         self.var_mem_name.set("")
         self.var_mem_email.set("")
-        self.var_mem_gender.set("")
+        self.var_mem_gender.set("Select")
         self.var_mem_contact.set("")
         self.var_mem_dob.set("")
         self.var_mem_pass.set("")
-        self.var_mem_usertype.set("")
+        self.var_mem_usertype.set("Admin")
+        self.var_mem_searchtxt.set("")
+        self.var_mem_searchby.set("Select")
+
+        self.show()
+
+#======= Search Button ===============================
+    def search(self):
+        con=sqlite3.connect(database='ims.db')
+        cur=con.cursor()
+        try:
+            if self.var_mem_searchby.get()=="Select":
+                messagebox.showerror("Erro","Select Search By Option",parent=self.root)
+            elif self.var_mem_searchtxt.get()=="":
+                messagebox.showerror("Error","Search input should be required ",parent=self.root)
+                cur.execute("select * from member")
+            else:
+                cur.execute("Select * from member where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
+                rows=cur.fetchall()
+                if len(rows)!= 0:
+                    self.MemberTable.delete(*self.MemberTable.get_children())
+                    for row in rows:
+                        self.MemberTable.insert('',END,values=row)
+                else:
+                    messagebox.showerror("Error","No Record Found",parent=self.root)
+
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+            
+
 
 if __name__ == "__main__":
     root = Tk()

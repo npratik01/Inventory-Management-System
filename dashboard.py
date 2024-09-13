@@ -3,9 +3,6 @@ from PIL import Image, ImageTk
 from member import memberClass
 from product import productClass
 
-
-
-
 class IMS:
     def __init__(self, root):
         self.root = root
