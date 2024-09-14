@@ -102,15 +102,15 @@ class productClass:
         scrolly = Scrollbar(p_frame,orient=VERTICAL)
         scrollx = Scrollbar(p_frame,orient=HORIZONTAL)
         
-        self.product_tabel=ttk.Treeview(p_frame,columns=("Product Name","Invoice number","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.product_tabel=ttk.Treeview(p_frame,columns=("Product Name","Invoice_number","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.product_tabel.xview)
         scrolly.config(command=self.product_tabel.yview)
         self.product_tabel.heading("Product Name",text="Product Name")
-        self.product_tabel.heading("Invoice number",text="Invoice number")
+        self.product_tabel.heading("Invoice_number",text="Invoice number")
         self.product_tabel.heading("Invoice date",text="Invoice date")
-        self.product_tabel.heading("Price",text="Gender")
+        self.product_tabel.heading("Price",text="Price")
         self.product_tabel.heading("Total Invoice Amount",text="Total Invoice Amount")
         self.product_tabel.heading("Supplier Name",text="Supplier Name")
         self.product_tabel.heading("Vendor MO NO",text="Vendor MO NO")
@@ -125,7 +125,7 @@ class productClass:
         self.product_tabel["show"]="headings"
 
         self.product_tabel.column("Product Name",width=90)
-        self.product_tabel.column("Invoice number",width=100)
+        self.product_tabel.column("Invoice_number",width=100)
         self.product_tabel.column("Invoice date",width=100)
         self.product_tabel.column("Price",width=100)
         self.product_tabel.column("Total Invoice Amount",width=100)
@@ -146,26 +146,53 @@ class productClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            if self.var_mem_prn.get()=="":
-                messagebox.showerror("Error","Member ID Must be required",parent=self.root)
-            else:
-                cur.execute("SELECT * FROM member WHERE memid=?",(self.var_mem_prn.get(),))
+            if self.var_invoice_no.get()=="":
+                messagebox.showerror("Error","INVOICE NUMBER Must be required",parent=self.root)
+            else:               # "Product Name","Invoice number","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"
+                cur.execute("SELECT * FROM product WHERE [Invoice_number]=?",(self.var_invoice_no.get(),))
                 row=cur.fetchone()
                 if row != None:
-                    messagebox.showerror("Error", "This Member ID already assigned , try different",parent=self.root)
+                    messagebox.showerror("Error", "Product already present , try different",parent=self.root)
                 else:
-                    cur.execute("Insert into member (memid,name,email,gender,contact,dob,pass,utype) values(?,?,?,?,?,?,?,?)",(
-                        self.var_mem_prn.get(),
-                        self.var_mem_name.get(),
-                        self.var_mem_email.get(),
-                        self.var_mem_gender.get(),
-                        self.var_mem_contact.get(),
-                        self.var_mem_dob.get(),
-                        self.var_mem_pass.get(),
-                        self.var_mem_usertype.get()
+                    cur.execute("""
+                        INSERT INTO product (
+                            [Product Name], [Invoice_number], [Invoice date], [Price], 
+                            [Total Invoice Amount], [Supplier Name], [Vendor MO NO], 
+                            [Email of vendor], [R Student Name], [R Std Mo No], 
+                            [Current position], [Current Mo No]
+                        ) 
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        """, (
+                        self.var_cat.get(),
+                        self.var_invoice_no.get(),
+                        self.var_invoice_date.get(),
+                        self.var_price_item.get(),
+                        self.var_inovice_amount.get(),
+                        self.var_supp_name.get(),
+                        self.var_mo_no.get(),
+                        self.var_email_vendor.get(),
+                        self.var_received_std_name.get(),
+                        self.var_received_mo_no.get(),
+                        self.var_curr_posi.get(),
+                        self.var_curr_mo_no.get()
                     ))
+                    
+                    # cur.execute("Insert into product (Product Name,Invoice_number,Invoice date,Price,Total Invoice Amount,Supplier Name,Vendor MO NO,Email of vendor,R Student Name,R Std Mo No,Current position,Current Mo No) values(?,?,?,?,?,?,?,?,?,?,?,?)",(
+                    #     self.var_cat.get(),
+                    #     self.var_invoice_no.get(),
+                    #     self.var_invoice_date.get(),
+                    #     self.var_price_item.get(),
+                    #     self.var_inovice_amount.get(),
+                    #     self.var_supp_name.get(),
+                    #     self.var_mo_no.get(),
+                    #     self.var_email_vendor.get(),
+                    #     self.var_received_std_name.get(),
+                    #     self.var_received_mo_no.get(),
+                    #     self.var_curr_posi.get(),
+                    #     self.var_curr_mo_no.get(),
+                    # ))
                     con.commit()
-                    messagebox.showinfo("Success","Member Added Successfully",parent=self.root)
+                    messagebox.showinfo("Success","Product Added Successfully",parent=self.root)
                     self.show()
 
                 
@@ -177,7 +204,7 @@ class productClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            cur.execute("select * from member")
+            cur.execute("select * from product")
             rows=cur.fetchall()
             self.product_tabel.delete(*self.product_tabel.get_children())
             for row in rows:
@@ -192,6 +219,7 @@ class productClass:
         f=self.product_tabel.focus()
         content=(self.product_tabel.item(f))
         row=content['values']
+        
         # print(row)
 
 
