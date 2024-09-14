@@ -236,7 +236,7 @@ class memberClass:
 #======= Clear Button ================================================================================================
 
     def clear(self):
-        self.var_mem_prn.set(r"")
+        self.var_mem_prn.set("")
         self.var_mem_name.set("")
         self.var_mem_email.set("")
         self.var_mem_gender.set("Select")
