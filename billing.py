@@ -9,7 +9,7 @@ class BilliClass:
         self.root.config(bg = "white")
 
         #== title ==
-        # self.icon_title = PhotoImage(file="")
+        # self.icon_title = PhotoImage(file="") 
         self.icon_title = Image.open("Images/thirdaxislogo1.png")
         self.icon_title = self.icon_title.resize((70,70),Image.LANCZOS)
         self.icon_title = ImageTk.PhotoImage(self.icon_title)
