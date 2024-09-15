@@ -35,16 +35,17 @@ class productClass:
         #=======title=======
         title = Label(product_Frame,text="Manage Product Details",font=("goudy old style",20),bg="#0f4d7d",fg="white",).pack(side=TOP,fill=X)
 
-        lbl_product_name = Label(product_Frame,text="Product Name",font=("goudy old style",20),bg="white").place(x=30,y=60)
-        lbl_Invoice_number = Label(product_Frame,text="Invoice number",font=("goudy old style",20),bg="white").place(x=30,y=110)
-        lbl_Invoice_date = Label(product_Frame,text="Invoice date",font=("goudy old style",20),bg="white").place(x=30,y=160)
-        lbl_Price_of_the_item= Label(product_Frame,text="Price of the item",font=("goudy old style",20),bg="white").place(x=30,y=210)
+        
+        lbl_Invoice_number = Label(product_Frame,text="Invoice Number",font=("goudy old style",20),bg="white").place(x=30,y=60)
+        lbl_product_name = Label(product_Frame,text="Product Name",font=("goudy old style",20),bg="white").place(x=30,y=110)
+        lbl_Invoice_date = Label(product_Frame,text="Invoice Date",font=("goudy old style",20),bg="white").place(x=30,y=160)
+        lbl_Price_of_the_item= Label(product_Frame,text="Price of the Item",font=("goudy old style",20),bg="white").place(x=30,y=210)
         lbl_Invoice_Amount= Label(product_Frame,text="Total Invoice Amount",font=("goudy old style",20),bg="white").place(x=30,y=260)
         lbl_supplier_name = Label(product_Frame,text="Supplier Name",font=("goudy old style",20),bg="white").place(x=30,y=310)
-        lbl_mobile_number = Label(product_Frame,text="Mobile Number of vendor",font=("goudy old style",20),bg="white").place(x=30,y=360)
+        lbl_mobile_number = Label(product_Frame,text="Mobile Number of Vendor",font=("goudy old style",20),bg="white").place(x=30,y=360)
         lbl_email_vendor= Label(product_Frame,text="Email of Vendor",font=("goudy old style",20),bg="white").place(x=30,y=410)
-        lbl_received_by_student_name = Label(product_Frame,text="Received by student name",font=("goudy old style",20),bg="white").place(x=30,y=460)
-        lbl_received_mo_no = Label(product_Frame,text="Received by student MO NUMBER",font=("goudy old style",20),bg="white").place(x=30,y=510)
+        lbl_received_by_student_name = Label(product_Frame,text="Received by Student Name",font=("goudy old style",20),bg="white").place(x=30,y=460)
+        lbl_received_mo_no = Label(product_Frame,text="Received by Student MO NUMBER",font=("goudy old style",20),bg="white").place(x=30,y=510)
         lbl_curr_posi_name = Label(product_Frame,text="Currently Position",font=("goudy old style",20),bg="white").place(x=30,y=560)
         lbl_curr_posi_no = Label(product_Frame,text="Currently Number",font=("goudy old style",20),bg="white").place(x=30,y=610)
 
@@ -61,18 +62,19 @@ class productClass:
         # cmb_sup.place(x=300,y=110,width=200)
         # cmb_sup.current(0)
 
-        txt_name = Entry(product_Frame,textvariable=self.var_cat,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=60,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_invoice_no,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=110,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_invoice_date,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=160,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_price_item,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=210,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_inovice_amount,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=260,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_supp_name,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=310,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=360,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_email_vendor,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=410,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_received_std_name,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=460,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_received_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=510,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_curr_posi,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=560,width=200)
-        txt_name = Entry(product_Frame,textvariable=self.var_curr_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=300,y=610,width=200)
+        
+        txt_name = Entry(product_Frame,textvariable=self.var_invoice_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=60,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_cat,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=110,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_invoice_date,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=160,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_price_item,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=210,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_inovice_amount,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=260,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_supp_name,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=310,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=360,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_email_vendor,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=410,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_received_std_name,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=460,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_received_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=510,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_curr_posi,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=560,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_curr_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=610,width=200)
 
          #==== Buttons =====
         btn_add = Button(product_Frame,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=10,y=700,width=100,height=40)
@@ -102,13 +104,14 @@ class productClass:
         scrolly = Scrollbar(p_frame,orient=VERTICAL)
         scrollx = Scrollbar(p_frame,orient=HORIZONTAL)
         
-        self.product_tabel=ttk.Treeview(p_frame,columns=("Product Name","Invoice_number","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.product_tabel=ttk.Treeview(p_frame,columns=("Invoice_number","Product Name","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.product_tabel.xview)
         scrolly.config(command=self.product_tabel.yview)
-        self.product_tabel.heading("Product Name",text="Product Name")
+        
         self.product_tabel.heading("Invoice_number",text="Invoice number")
+        self.product_tabel.heading("Product Name",text="Product Name")
         self.product_tabel.heading("Invoice date",text="Invoice date")
         self.product_tabel.heading("Price",text="Price")
         self.product_tabel.heading("Total Invoice Amount",text="Total Invoice Amount")
@@ -124,8 +127,9 @@ class productClass:
 
         self.product_tabel["show"]="headings"
 
-        self.product_tabel.column("Product Name",width=90)
+        
         self.product_tabel.column("Invoice_number",width=100)
+        self.product_tabel.column("Product Name",width=90)
         self.product_tabel.column("Invoice date",width=100)
         self.product_tabel.column("Price",width=100)
         self.product_tabel.column("Total Invoice Amount",width=100)
@@ -156,15 +160,16 @@ class productClass:
                 else:
                     cur.execute("""
                         INSERT INTO product (
-                            [Product Name], [Invoice_number], [Invoice date], [Price], 
+                            [Invoice_number],[Product Name], [Invoice date], [Price], 
                             [Total Invoice Amount], [Supplier Name], [Vendor MO NO], 
                             [Email of vendor], [R Student Name], [R Std Mo No], 
                             [Current position], [Current Mo No]
                         ) 
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """, (
-                        self.var_cat.get(),
+                        
                         self.var_invoice_no.get(),
+                        self.var_cat.get(),
                         self.var_invoice_date.get(),
                         self.var_price_item.get(),
                         self.var_inovice_amount.get(),
@@ -215,12 +220,12 @@ class productClass:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
             
 
-    def get_data(self,ev):
-        f=self.product_tabel.focus()
-        content=(self.product_tabel.item(f))
-        row=content['values']
+    # def get_data(self,ev):
+    #     f=self.product_tabel.focus()
+    #     content=(self.product_tabel.item(f))
+    #     row=content['values']
         
-        # print(row)
+    #     # print(row)
 
 
         # Updated get_data method
@@ -230,8 +235,9 @@ class productClass:
         row = content['values']
         # if row:
         # Assuming correct order and existing database schema alignment
-        self.var_cat.set(row[0])
-        self.var_invoice_no.set(row[1])
+        
+        self.var_invoice_no.set(row[0])
+        self.var_cat.set(row[1])
         self.var_invoice_date.set(row[2])
         self.var_price_item.set(row[3])
         self.var_inovice_amount.set(row[4])
@@ -249,27 +255,48 @@ class productClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            if self.var_mem_prn.get()=="":
-                messagebox.showerror("Error","Member ID Must be required",parent=self.root)
+            if self.var_invoice_no.get()=="":
+                messagebox.showerror("Error","Please Select Product Invoice No From List",parent=self.root)
             else:
-                cur.execute("SELECT * FROM member WHERE memid=?",(self.var_mem_prn.get(),))
+                cur.execute("SELECT * FROM product WHERE [Invoice_number]=?",(self.var_invoice_no.get(),))
                 row=cur.fetchone()
                 if row == None:
-                    messagebox.showerror("Error", "Invalid Member ID",parent=self.root)
+                    messagebox.showerror("Error", "Invalid Product Invoice Number",parent=self.root)
                 else:
-                    cur.execute("Update member set name=?,email=?,gender=?,contact=?,dob=?,pass=?,utype=? where memid=?",(
+                    #cur.execute("Update member set name=?,email=?,gender=?,contact=?,dob=?,pass=?,utype=? where memid=?",(
+                    cur.execute("""
+                        UPDATE product 
+                        SET 
+                            [Product Name]=?, 
+                            [Invoice date]=?, 
+                            [Price]=?, 
+                            [Total Invoice Amount]=?, 
+                            [Supplier Name]=?, 
+                            [Vendor MO NO]=?, 
+                            [Email of vendor]=?, 
+                            [R Student Name]=?, 
+                            [R Std Mo No]=?, 
+                            [Current position]=?, 
+                            [Current Mo No]=?
+                        WHERE 
+                            [Invoice_number]=?
+                    """,(
                 
-                        self.var_mem_name.get(),
-                        self.var_mem_email.get(),
-                        self.var_mem_gender.get(),
-                        self.var_mem_contact.get(),
-                        self.var_mem_dob.get(),
-                        self.var_mem_pass.get(),
-                        self.var_mem_usertype.get(),
-                        self.var_mem_prn.get()
+                    self.var_cat.get(),
+                    self.var_invoice_date.get(),
+                    self.var_price_item.get(),
+                    self.var_inovice_amount.get(),
+                    self.var_supp_name.get(),
+                    self.var_mo_no.get(),
+                    self.var_email_vendor.get(),
+                    self.var_received_std_name.get(),
+                    self.var_received_mo_no.get(),
+                    self.var_curr_posi.get(),
+                    self.var_curr_mo_no.get(),
+                    self.var_invoice_no.get()
                     ))
                     con.commit()
-                    messagebox.showinfo("Success","Member Updated Successfully",parent=self.root)
+                    messagebox.showinfo("Success","product Updated Successfully",parent=self.root)
                     self.show()
 
                 
@@ -281,19 +308,19 @@ class productClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            if self.var_mem_prn.get()=="":
-                messagebox.showerror("Error","Member ID Must be required",parent=self.root)
+            if self.var_invoice_no.get()=="":
+                messagebox.showerror("Error","Select the product from the list",parent=self.root)
             else:
-                cur.execute("SELECT * FROM member WHERE memid=?",(self.var_mem_prn.get(),))
+                cur.execute("SELECT * FROM product WHERE [Invoice_number]=?",(self.var_invoice_no.get(),))
                 row=cur.fetchone()
                 if row == None:
-                    messagebox.showerror("Error", "Invalid Member ID",parent=self.root)
+                    messagebox.showerror("Error", "Invalid product Invoice number",parent=self.root)
                 else:
                     op=messagebox.askyesno("Confirm", "Do you really want to delete ?",parent=self.root)
                     if op == True:
-                        cur.execute("delete from member where memid=? ",(self.var_mem_prn.get(),))
+                        cur.execute("delete from product where [Invoice_number]=? ",(self.var_invoice_no.get(),))
                         con.commit()
-                        messagebox.showinfo("Delete","Member Deleted Successfully",parent=self.root)
+                        messagebox.showinfo("Delete","Product Deleted Successfully",parent=self.root)
                         self.clear()
 
         except Exception as ex:
@@ -302,14 +329,19 @@ class productClass:
 #======= Clear Button ================================================================================================
 
     def clear(self):
-        self.var_mem_prn.set(r"")
-        self.var_mem_name.set("")
-        self.var_mem_email.set("")
-        self.var_mem_gender.set("Select")
-        self.var_mem_contact.set("")
-        self.var_mem_dob.set("")
-        self.var_mem_pass.set("")
-        self.var_mem_usertype.set("Admin")
+        
+        self.var_invoice_no.set(""),
+        self.var_cat.set(""),
+        self.var_invoice_date.set(""),
+        self.var_price_item.set(""),
+        self.var_inovice_amount.set(""),
+        self.var_supp_name.set(""),
+        self.var_mo_no.set(""),
+        self.var_email_vendor.set(""),
+        self.var_received_std_name.set(""),
+        self.var_received_mo_no.set(""),
+        self.var_curr_posi.set(""),
+        self.var_curr_mo_no.set("")
         self.var_mem_searchtxt.set("")
         self.var_mem_searchby.set("Select")
 
@@ -324,9 +356,12 @@ class productClass:
                 messagebox.showerror("Erro","Select Search By Option",parent=self.root)
             elif self.var_mem_searchtxt.get()=="":
                 messagebox.showerror("Error","Search input should be required ",parent=self.root)
-                cur.execute("select * from member")
+                cur.execute("select * from product")
             else:
-                cur.execute("Select * from member where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
+                #cur.execute("Select * from product where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
+                query = f"SELECT * FROM product WHERE {self.var_mem_searchby.get()} LIKE ?"
+                cur.execute(query, ('%' + self.var_mem_searchtxt.get() + '%',))
+
                 rows=cur.fetchall()
                 if len(rows)!= 0:
                     self.product_tabel.delete(*self.product_tabel.get_children())
