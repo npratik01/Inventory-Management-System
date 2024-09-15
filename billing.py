@@ -1,5 +1,6 @@
 from tkinter import*
 from PIL import Image, ImageTk
+from tkinter import ttk,messagebox
 
 class BilliClass:
     def __init__(self, root):
@@ -42,6 +43,41 @@ class BilliClass:
         btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
         btn_showAll=Button(ProductFrame2,text="Show All",font=("goudy old style",15),bg="#083531",fg="white",cursor="hand2").place(x=285,y=10,width=100,height=25)
 
+        productFrame3 = Frame(ProductFrame1,bd=3,relief=RIDGE)
+        productFrame3.place(x=2,y=140,width=398,height=375)
+
+        scrolly = Scrollbar(productFrame3,orient=VERTICAL)
+        scrollx = Scrollbar(productFrame3,orient=HORIZONTAL)
+
+        self.product_Table=ttk.Treeview(productFrame3,columns=("pid","name","price","qty","status"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        scrollx.pack(side=BOTTOM,fill=X)
+        scrolly.pack(side=RIGHT,fill=Y)
+        scrollx.config(command=self.product_Table.xview)
+        scrolly.config(command=self.product_Table.yview)
+
+        self.product_Table.heading("pid",text="PID")
+        self.product_Table.heading("name",text="Name")
+        self.product_Table.heading("price",text="Price")
+        self.product_Table.heading("qty",text="QTY")
+        self.product_Table.heading("status",text="Status")
+
+        self.product_Table["show"]="headings"
+
+        self.product_Table.column("pid",width=90)
+        self.product_Table.column("name",width=100) 
+        self.product_Table.column("price",width=100)
+        self.product_Table.column("qty",width=100)
+        self.product_Table.column("status",width=100)
+        self.product_Table.pack(fill=BOTH,expand=1)
+        # self.product_Table.bind("<ButtonRelease-1>",self.get_data)
+        lbl_note=Label(ProductFrame1,text="Note: 'Enter 0 Quantity to remove product from the cart'",font=("goudy old style",12),anchor='w',bg="white",fg="red").pack(side=BOTTOM,fill=X)
+
+        #========== Customer Frame =================
+        customerFrame = Frame(self.root,bd=4,relief=RIDGE,bg="white")
+        customerFrame.place(x=420,y=110,width=530,height=70)
+
+        
+        
         
 
 
