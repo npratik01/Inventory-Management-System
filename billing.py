@@ -3,7 +3,7 @@ from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
 
-class BilliClass:
+class BillClass:
     def __init__(self, root):
         self.root = root
         self.root.geometry("1350x700+0+0")
@@ -29,14 +29,14 @@ class BilliClass:
 
 #==========Product Frame =================================================================================================================================================================================
         
-        self.var_search=StringVar()
+        
         ProductFrame1 = Frame(self.root,bd=4,relief=RIDGE,bg="white")
         ProductFrame1.place(x=6,y=110,width=410,height=550)
 
         pTitle=Label(ProductFrame1,text="All Products",font=("goudy old style",20,"bold"),bg="#262626",fg="white").pack(side=TOP,fill=X)
 
         #======Product search Frame ===============
-
+        self.var_search=StringVar()
         ProductFrame2 = Frame(ProductFrame1,bd=2,relief=RIDGE,bg="white")
         ProductFrame2.place(x=2,y=42,width=398,height=90)
 
@@ -44,7 +44,7 @@ class BilliClass:
 
         lbl_search=Label(ProductFrame2,text="Product Name",font=("times new roman",15,"bold"),bg="white").place(x=2,y=43)
         txt_search=Entry(ProductFrame2,textvariable=self.var_search,font=("times new roman",15,),bg="lightyellow").place(x=130,y=47,width=150,height=22)
-        btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
+        btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),command=self.search,bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
         btn_showAll=Button(ProductFrame2,text="Show All",font=("goudy old style",15),bg="#083531",fg="white",cursor="hand2").place(x=285,y=10,width=100,height=25)
 
         #======Product Details Frame ===============
@@ -72,7 +72,7 @@ class BilliClass:
         self.product_Table.column("price",width=100)
         self.product_Table.column("qty",width=100)
         self.product_Table.pack(fill=BOTH,expand=1)
-        # self.product_Table.bind("<ButtonRelease-1>",self.get_data)
+        self.product_Table.bind("<ButtonRelease-1>",self.get_input)
         lbl_note=Label(ProductFrame1,text="Note: 'Enter 0 Quantity to remove product from the cart'",font=("goudy old style",12),anchor='w',bg="white",fg="red").pack(side=BOTTOM,fill=X)
 
         #========== Customer Frame =================
@@ -249,9 +249,31 @@ class BilliClass:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
             
 
+    def search(self):
+        con=sqlite3.connect(database='ims.db')
+        cur=con.cursor()
+        try:
+            if self.var_search.get()=="":
+                messagebox.showerror("Error","Search input should be required ",parent=self.root)
+                cur.execute("select * from product")
+            else:
+                query = f"SELECT * FROM product WHERE [Product Name] LIKE '%"+self.var_search.get()+"%'"
+                cur.execute(query, ('%' + self.var_search.get() + '%',))
+
+                rows=cur.fetchall()
+                if len(rows)!= 0:
+                    self.product_Table.delete(*self.product_Table.get_children())
+                    for row in rows:
+                        self.product_Table.insert('',END,values=row)
+                else:
+                    messagebox.showerror("Error","No Record Found",parent=self.root)
+
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+            
 
 
 if __name__ == "__main__":
     root = Tk()
-    obj = BilliClass(root)
+    obj = BillClass(root)
     root.mainloop()
