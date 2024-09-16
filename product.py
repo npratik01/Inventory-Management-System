@@ -87,7 +87,7 @@ class productClass:
         SearchFrame.place(x=680,y=30,width=700,height=80)
 
         #==== Options ====
-        cmb_search = ttk.Combobox(SearchFrame,textvariable=self.var_mem_searchby,values=("Select","Invoice_no","Name"),state="readonly",justify=CENTER,font=("gaudy old style",15))
+        cmb_search = ttk.Combobox(SearchFrame,textvariable=self.var_mem_searchby,values=("Select","Invoice No","Product Name"),state="readonly",justify=CENTER,font=("gaudy old style",15))
         cmb_search.place(x=20,y=10,width=180)
         cmb_search.current(0)
 
@@ -110,7 +110,7 @@ class productClass:
         scrollx.config(command=self.product_tabel.xview)
         scrolly.config(command=self.product_tabel.yview)
         
-        self.product_tabel.heading("Invoice_number",text="Invoice number")
+        self.product_tabel.heading("Invoice_number",text="Invoice Number")
         self.product_tabel.heading("Product Name",text="Product Name")
         self.product_tabel.heading("Invoice date",text="Invoice date")
         self.product_tabel.heading("Price",text="Price")
@@ -352,13 +352,13 @@ class productClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            if self.var_mem_searchby.get()=="Select":
-                messagebox.showerror("Erro","Select Search By Option",parent=self.root)
+            if self.var_mem_searchtxt.get()=="Select":
+                messagebox.showerror("Error","Select Search By Option",parent=self.root)
             elif self.var_mem_searchtxt.get()=="":
                 messagebox.showerror("Error","Search input should be required ",parent=self.root)
                 cur.execute("select * from product")
             else:
-                #cur.execute("Select * from product where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
+                # cur.execute("select * from product where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
                 query = f"SELECT * FROM product WHERE {self.var_mem_searchby.get()} LIKE ?"
                 cur.execute(query, ('%' + self.var_mem_searchtxt.get() + '%',))
 
