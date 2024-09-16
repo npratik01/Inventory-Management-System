@@ -349,30 +349,51 @@ class productClass:
 
 #======= Search Button ===============================
     def search(self):
-        con=sqlite3.connect(database='ims.db')
-        cur=con.cursor()
+        con = sqlite3.connect(database='ims.db')
+        cur = con.cursor()
         try:
-            if self.var_mem_searchby.get()=="Select":
-                messagebox.showerror("Erro","Select Search By Option",parent=self.root)
-            elif self.var_mem_searchtxt.get()=="":
-                messagebox.showerror("Error","Search input should be required ",parent=self.root)
-                cur.execute("select * from product")
-            else:
-                #cur.execute("Select * from product where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
-                query = f"SELECT * FROM product WHERE {self.var_mem_searchby.get()} LIKE ?"
-                cur.execute(query, ('%' + self.var_mem_searchtxt.get() + '%',))
-
-                rows=cur.fetchall()
-                if len(rows)!= 0:
-                    self.product_tabel.delete(*self.product_tabel.get_children())
-                    for row in rows:
-                        self.product_tabel.insert('',END,values=row)
-                else:
-                    messagebox.showerror("Error","No Record Found",parent=self.root)
-
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+            # Validate the 'Search By' option
+            if self.var_mem_searchby.get() == "Select":
+                messagebox.showerror("Error", "Please select a valid search category", parent=self.root)
+                return
             
+            # Validate the search input
+            if self.var_mem_searchtxt.get() == "":
+                messagebox.showerror("Error", "Search input is required", parent=self.root)
+                return
+
+            # Map the search field to actual column names
+            search_by_column = self.var_mem_searchby.get()
+            if search_by_column == "Invoice_no":
+                search_by_column = "Invoice_number"
+            elif search_by_column == "Name":
+                search_by_column = "Product Name"
+
+            # Use LIKE for text fields, and = for numeric fields
+            if search_by_column == "Invoice_number":
+                query = f"SELECT * FROM product WHERE {search_by_column} = ?"
+                cur.execute(query, (self.var_mem_searchtxt.get(),))
+            else:
+                query = f"SELECT * FROM product WHERE LOWER({search_by_column}) LIKE LOWER(?)"
+                cur.execute(query, ('%' + self.var_mem_searchtxt.get().lower() + '%',))
+
+            # Fetch and display results
+            rows = cur.fetchall()
+
+            # Populate the table with search results
+            if rows:
+                self.product_tabel.delete(*self.product_tabel.get_children())
+                for row in rows:
+                    self.product_tabel.insert('', END, values=row)
+            else:
+                messagebox.showerror("Error", "No records found", parent=self.root)
+        
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
+        
+        finally:
+            # Ensure the connection is closed after the operation
+            con.close()
 
 
         
