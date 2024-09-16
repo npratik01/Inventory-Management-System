@@ -87,7 +87,7 @@ class productClass:
         SearchFrame.place(x=680,y=30,width=700,height=80)
 
         #==== Options ====
-        cmb_search = ttk.Combobox(SearchFrame,textvariable=self.var_mem_searchby,values=("Select","Invoice_no","Name"),state="readonly",justify=CENTER,font=("gaudy old style",15))
+        cmb_search = ttk.Combobox(SearchFrame,textvariable=self.var_mem_searchby,values=("Select","Invoice No","Name"),state="readonly",justify=CENTER,font=("gaudy old style",15))
         cmb_search.place(x=20,y=10,width=180)
         cmb_search.current(0)
 
@@ -110,9 +110,9 @@ class productClass:
         scrollx.config(command=self.product_tabel.xview)
         scrolly.config(command=self.product_tabel.yview)
         
-        self.product_tabel.heading("Invoice_number",text="Invoice number")
+        self.product_tabel.heading("Invoice_number",text="Invoice Number")
         self.product_tabel.heading("Product Name",text="Product Name")
-        self.product_tabel.heading("Invoice date",text="Invoice date")
+        self.product_tabel.heading("Invoice date",text="Invoice Date")
         self.product_tabel.heading("Price",text="Price")
         self.product_tabel.heading("Total Invoice Amount",text="Total Invoice Amount")
         self.product_tabel.heading("Supplier Name",text="Supplier Name")
@@ -364,13 +364,13 @@ class productClass:
 
             # Map the search field to actual column names
             search_by_column = self.var_mem_searchby.get()
-            if search_by_column == "Invoice_no":
+            if search_by_column == "Invoice No":
                 search_by_column = "Invoice_number"
             elif search_by_column == "Name":
-                search_by_column = "Product Name"
+                search_by_column = "[Product Name]"
 
             # Use LIKE for text fields, and = for numeric fields
-            if search_by_column == "Invoice_number":
+            if search_by_column == "Invoice Number":
                 query = f"SELECT * FROM product WHERE {search_by_column} = ?"
                 cur.execute(query, (self.var_mem_searchtxt.get(),))
             else:
