@@ -5,7 +5,7 @@ import sqlite3
 
 
 class productClass:
-    def _init_(self, root):
+    def __init__(self, root):
         self.root = root
         self.root.geometry("1100x500+220+130")
         self.root.title("Inventory Management System | Team Third Axis")
@@ -404,4 +404,4 @@ class productClass:
 if __name__ == "__main__":
     root = Tk()
     obj = productClass(root)
-    root.mainloop()
+    root.mainloop()        
