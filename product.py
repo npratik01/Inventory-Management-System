@@ -376,6 +376,7 @@ class productClass:
             else:
                 query = f"SELECT * FROM product WHERE LOWER({search_by_column}) LIKE LOWER(?)"
                 cur.execute(query, ('%' + self.var_mem_searchtxt.get().lower() + '%',))
+                
 
             # Fetch and display results
             rows = cur.fetchall()
