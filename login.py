@@ -1,6 +1,7 @@
 from tkinter import*
 from PIL import Image, ImageTk
 from tkinter import messagebox
+import sqlite3
 
 
 class LoginSystem:
@@ -21,7 +22,7 @@ class LoginSystem:
 
         title=Label(loginFrame,text="Login System",font=("Elephant", 30, "bold"),bg="white").place(x=0,y=30,relwidth=1)
 
-        lbl_user=Label(loginFrame,text="Username",font=("Andalus",15),bg="white",fg="#767171").place(x=50,y=100)
+        lbl_user=Label(loginFrame,text="Member ID",font=("Andalus",15),bg="white",fg="#767171").place(x=50,y=100)
         self.username=StringVar()
         self.password=StringVar()
         txt_username=Entry(loginFrame,textvariable=self.username,font=("times new roman",15),bg="#ECECEC").place(x=50,y=140,width=250)
@@ -40,10 +41,9 @@ class LoginSystem:
         registerFrame=Frame(self.root,bd=2,relief=RIDGE,bg="white")
         registerFrame.place(x=650,y=570,width=350,height=60)
 
-        lbl_reg=Label(registerFrame,text="Don't have an account ?",font=("times new roman",13),bg="white").place(x=40,y=20)
-        btn_signup=Button(registerFrame,text="Sign Up",font=("times new roman",13,"bold"),bg="white",fg="#00759E",bd=0,activebackground="white",activeforeground="#00759E").place(x=200,y=17)
-
-        #====Animation Images======
+        lbl_reg=Label(registerFrame,text="Team Third Axis | Beyond The Horizon",font=("times new roman",13),bg="white").place(x=40,y=18)
+        
+        #====Animation Images====== 
         self.im1=ImageTk.PhotoImage(file="Images/im1.png")
         self.im2=ImageTk.PhotoImage(file="Images/im2.png")
         self.im3=ImageTk.PhotoImage(file="Images/im3.png")

@@ -146,7 +146,7 @@ class memberClass:
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
             
-
+ 
     def show(self):
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()

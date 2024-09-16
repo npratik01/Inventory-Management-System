@@ -36,20 +36,20 @@ class productClass:
         title = Label(product_Frame,text="Manage Product Details",font=("goudy old style",20),bg="#0f4d7d",fg="white",).pack(side=TOP,fill=X)
 
         
-        lbl_Invoice_number = Label(product_Frame,text="Invoice Number",font=("goudy old style",20),bg="white").place(x=30,y=60)
-        lbl_product_name = Label(product_Frame,text="Product Name",font=("goudy old style",20),bg="white").place(x=30,y=110)
-        lbl_Invoice_date = Label(product_Frame,text="Invoice Date",font=("goudy old style",20),bg="white").place(x=30,y=160)
-        lbl_Price_of_the_item= Label(product_Frame,text="Price of the Item",font=("goudy old style",20),bg="white").place(x=30,y=210)
-        lbl_Invoice_Amount= Label(product_Frame,text="Total Invoice Amount",font=("goudy old style",20),bg="white").place(x=30,y=260)
-        lbl_supplier_name = Label(product_Frame,text="Supplier Name",font=("goudy old style",20),bg="white").place(x=30,y=310)
-        lbl_mobile_number = Label(product_Frame,text="Mobile Number of Vendor",font=("goudy old style",20),bg="white").place(x=30,y=360)
-        lbl_email_vendor= Label(product_Frame,text="Email of Vendor",font=("goudy old style",20),bg="white").place(x=30,y=410)
-        lbl_received_by_student_name = Label(product_Frame,text="Received by Student Name",font=("goudy old style",20),bg="white").place(x=30,y=460)
-        lbl_received_mo_no = Label(product_Frame,text="Received by Student MO NUMBER",font=("goudy old style",20),bg="white").place(x=30,y=510)
-        lbl_curr_posi_name = Label(product_Frame,text="Currently Position",font=("goudy old style",20),bg="white").place(x=30,y=560)
-        lbl_curr_posi_no = Label(product_Frame,text="Currently Number",font=("goudy old style",20),bg="white").place(x=30,y=610)
+        lbl_Invoice_number = Label(product_Frame,text="Invoice Number :",font=("goudy old style",20)).place(x=30,y=60)
+        lbl_product_name = Label(product_Frame,text="Product Name :",font=("goudy old style",20)).place(x=30,y=110)
+        lbl_Invoice_date = Label(product_Frame,text="Invoice Date :",font=("goudy old style",20)).place(x=30,y=160)
+        lbl_Price_of_the_item= Label(product_Frame,text="Price of the Item :",font=("goudy old style",20)).place(x=30,y=210)
+        lbl_Invoice_Amount= Label(product_Frame,text="Total Invoice Amount :",font=("goudy old style",20)).place(x=30,y=260)
+        lbl_supplier_name = Label(product_Frame,text="Supplier Name :",font=("goudy old style",20)).place(x=30,y=310)
+        lbl_mobile_number = Label(product_Frame,text="Mobile Number of Vendor :",font=("goudy old style",20)).place(x=30,y=360)
+        lbl_email_vendor= Label(product_Frame,text="Email of Vendor :",font=("goudy old style",20)).place(x=30,y=410)
+        lbl_received_by_student_name = Label(product_Frame,text="Received by Student Name :",font=("goudy old style",20)).place(x=30,y=460)
+        lbl_received_mo_no = Label(product_Frame,text="Received by Student Mob No. :",font=("goudy old style",20)).place(x=30,y=510)
+        lbl_curr_posi_name = Label(product_Frame,text="Currently Position :",font=("goudy old style",20)).place(x=30,y=560)
+        lbl_curr_posi_no = Label(product_Frame,text="Currently Number :",font=("goudy old style",20)).place(x=30,y=610)
 
-    
+
 
         #txt_category =Label(product_Frame,text="Category",font=("goudy old style",20),bg="white").place(x=30,y=60)
 
@@ -80,7 +80,7 @@ class productClass:
         btn_add = Button(product_Frame,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=10,y=700,width=100,height=40)
         btn_update = Button(product_Frame,text="Update",command=self.update,font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=120,y=700,width=100,height=40)
         btn_delete = Button(product_Frame,text="Delete",command=self.delete,font=("goudy old style",15),bg="#f44336",fg="white",cursor="hand2").place(x=230,y=700,width=100,height=40)
-        btn_clear = Button(product_Frame,text="Clear",command=self.clear,font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=330,y=700,width=100,height=40)
+        btn_clear = Button(product_Frame,text="Clear",command=self.clear,font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=340,y=700,width=100,height=40)
 
         #==== Seaarch Frame ====
         SearchFrame = LabelFrame(self.root,text="Search Member",font=("goudy old style",12,"bold"),bd=2,bg="white")
@@ -116,12 +116,12 @@ class productClass:
         self.product_tabel.heading("Price",text="Price")
         self.product_tabel.heading("Total Invoice Amount",text="Total Invoice Amount")
         self.product_tabel.heading("Supplier Name",text="Supplier Name")
-        self.product_tabel.heading("Vendor MO NO",text="Vendor MO NO")
+        self.product_tabel.heading("Vendor MO NO",text="Vendor Mob No.")
         self.product_tabel.heading("Email of vendor",text="Email of vendor")
-        self.product_tabel.heading("R Student Name",text="R Student Name")
-        self.product_tabel.heading("R Std Mo No",text="R Std Mo No")
-        self.product_tabel.heading("Current position",text="Current position")
-        self.product_tabel.heading("Current Mo No",text="UEcurrent Mo no")
+        self.product_tabel.heading("R Student Name",text="Rec. Student Name")
+        self.product_tabel.heading("R Std Mo No",text="Rec. Std Mob No")
+        self.product_tabel.heading("Current position",text="Current Position")
+        self.product_tabel.heading("Current Mo No",text="Current Mob No")
 
         
 
