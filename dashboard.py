@@ -6,7 +6,7 @@ from supplier import supplierClass
 from sales import salesClass
 
 class IMS:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         self.root.geometry("1350x700+0+0")
         self.root.title("Inventory Management System | Team Third Axis")

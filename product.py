@@ -5,7 +5,7 @@ import sqlite3
 
 
 class productClass:
-    def __init__(self, root):
+    def _init_(self, root):
         self.root = root
         self.root.geometry("1100x500+220+130")
         self.root.title("Inventory Management System | Team Third Axis")
@@ -87,7 +87,7 @@ class productClass:
         SearchFrame.place(x=680,y=30,width=700,height=80)
 
         #==== Options ====
-        cmb_search = ttk.Combobox(SearchFrame,textvariable=self.var_mem_searchby,values=("Select","Invoice No","Product Name"),state="readonly",justify=CENTER,font=("gaudy old style",15))
+        cmb_search = ttk.Combobox(SearchFrame,textvariable=self.var_mem_searchby,values=("Select","Invoice_no","Name"),state="readonly",justify=CENTER,font=("gaudy old style",15))
         cmb_search.place(x=20,y=10,width=180)
         cmb_search.current(0)
 
@@ -110,7 +110,7 @@ class productClass:
         scrollx.config(command=self.product_tabel.xview)
         scrolly.config(command=self.product_tabel.yview)
         
-        self.product_tabel.heading("Invoice_number",text="Invoice Number")
+        self.product_tabel.heading("Invoice_number",text="Invoice number")
         self.product_tabel.heading("Product Name",text="Product Name")
         self.product_tabel.heading("Invoice date",text="Invoice date")
         self.product_tabel.heading("Price",text="Price")
@@ -352,33 +352,10 @@ class productClass:
         con = sqlite3.connect(database='ims.db')
         cur = con.cursor()
         try:
-<<<<<<< HEAD
-            if self.var_mem_searchtxt.get()=="Select":
-                messagebox.showerror("Error","Select Search By Option",parent=self.root)
-            elif self.var_mem_searchtxt.get()=="":
-                messagebox.showerror("Error","Search input should be required ",parent=self.root)
-                cur.execute("select * from product")
-            else:
-                # cur.execute("select * from product where "+self.var_mem_searchby.get()+" LIKE '%"+self.var_mem_searchtxt.get()+"%'")
-                query = f"SELECT * FROM product WHERE {self.var_mem_searchby.get()} LIKE ?"
-                cur.execute(query, ('%' + self.var_mem_searchtxt.get() + '%',))
-
-                rows=cur.fetchall()
-                if len(rows)!= 0:
-                    self.product_tabel.delete(*self.product_tabel.get_children())
-                    for row in rows:
-                        self.product_tabel.insert('',END,values=row)
-                else:
-                    messagebox.showerror("Error","No Record Found",parent=self.root)
-
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
-=======
             # Validate the 'Search By' option
             if self.var_mem_searchby.get() == "Select":
                 messagebox.showerror("Error", "Please select a valid search category", parent=self.root)
                 return
->>>>>>> 63e2f25e86f2d1b3ddaca458502b911313022be2
             
             # Validate the search input
             if self.var_mem_searchtxt.get() == "":
@@ -427,4 +404,4 @@ class productClass:
 if __name__ == "__main__":
     root = Tk()
     obj = productClass(root)
-    root.mainloop()        
+    root.mainloop()
