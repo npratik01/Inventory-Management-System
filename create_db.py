@@ -6,6 +6,7 @@ def create_db():
     
     # Create member table
     cur.execute("""
+<<<<<<< HEAD
         CREATE TABLE IF NOT EXISTS member (
             memid INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT,
@@ -17,6 +18,25 @@ def create_db():
             utype TEXT
         )
     """)
+=======
+            CREATE TABLE IF NOT EXISTS product(
+                Invoice_number INTEGER PRIMARY KEY AUTOINCREMENT, 
+                [Product Name] TEXT, 
+                [Invoice date] TEXT, 
+                Price INTEGER, 
+                qty REAL,
+                [Total Invoice Amount] TEXT, 
+                [Supplier Name] TEXT, 
+                [Vendor MO NO] TEXT, 
+                [Email of vendor] TEXT, 
+                [R Student Name] TEXT, 
+                [R Std Mo No] TEXT, 
+                [Current position] TEXT, 
+                [Current Mo No] TEXT
+                
+            )
+        """)
+>>>>>>> 35ba6a2fcd2a8a523a1b5ee14c47a87ee9061ae9
     con.commit()
     
     # Create supplier table

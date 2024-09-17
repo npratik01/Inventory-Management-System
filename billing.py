@@ -237,12 +237,11 @@ class BillClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            #self.product_Table=ttk.Treeview(productFrame3,columns=("Invoice_number","name","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
-            cur.execute("select Invoice_number,[Product Name],price,qty from product")
+            cur.execute("select * from product")
             rows=cur.fetchall()
-            self.product_Table.delete(*self.product_Table.get_children())
+            self.product_tabel.delete(*self.product_tabel.get_children())
             for row in rows:
-                self.product_Table.insert('',END,values=row)
+                self.product_tabel.insert('',END,values=row)
 
 
         except Exception as ex:
