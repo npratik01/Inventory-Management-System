@@ -16,8 +16,9 @@ def create_db():
                 Invoice_number INTEGER PRIMARY KEY AUTOINCREMENT, 
                 [Product Name] TEXT, 
                 [Invoice date] TEXT, 
-                Price TEXT, 
-                [Total Invoice Amount] TEXT, 
+                Price INTEGER, 
+                qty REAL,
+                [Total Invoice Amount] TEXT 
                 [Supplier Name] TEXT, 
                 [Vendor MO NO] TEXT, 
                 [Email of vendor] TEXT, 
@@ -25,9 +26,11 @@ def create_db():
                 [R Std Mo No] TEXT, 
                 [Current position] TEXT, 
                 [Current Mo No] TEXT
+                
             )
         """)
     con.commit()
+    
     
 
 create_db()

@@ -44,7 +44,7 @@ class BillClass:
 
         lbl_search=Label(ProductFrame2,text="Product Name",font=("times new roman",15,"bold"),bg="white").place(x=2,y=43)
         txt_search=Entry(ProductFrame2,textvariable=self.var_search,font=("times new roman",15,),bg="lightyellow").place(x=130,y=47,width=150,height=22)
-        btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),command=self.search,bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
+        btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
         btn_showAll=Button(ProductFrame2,text="Show All",font=("goudy old style",15),bg="#083531",fg="white",cursor="hand2").place(x=285,y=10,width=100,height=25)
 
         #======Product Details Frame ===============
@@ -54,21 +54,21 @@ class BillClass:
         scrolly = Scrollbar(productFrame3,orient=VERTICAL)
         scrollx = Scrollbar(productFrame3,orient=HORIZONTAL)
 
-        self.product_Table=ttk.Treeview(productFrame3,columns=("pid","name","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.product_Table=ttk.Treeview(productFrame3,columns=("Invoice_number","[Product Name]","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.product_Table.xview)
         scrolly.config(command=self.product_Table.yview)
 
-        self.product_Table.heading("pid",text="PID")
-        self.product_Table.heading("name",text="Name")
+        self.product_Table.heading("Invoice_number",text="Invoice No")
+        self.product_Table.heading("[Product Name]",text="Product Name")
         self.product_Table.heading("price",text="Price")
         self.product_Table.heading("qty",text="QTY")
 
         self.product_Table["show"]="headings"
 
-        self.product_Table.column("pid",width=90)
-        self.product_Table.column("name",width=100) 
+        self.product_Table.column("Invoice_number",width=90)
+        self.product_Table.column("[Product Name]",width=100) 
         self.product_Table.column("price",width=100)
         self.product_Table.column("qty",width=100)
         self.product_Table.pack(fill=BOTH,expand=1)
@@ -131,21 +131,21 @@ class BillClass:
         scrolly = Scrollbar(cartFrame,orient=VERTICAL)
         scrollx = Scrollbar(cartFrame,orient=HORIZONTAL)
 
-        self.cart_Table=ttk.Treeview(cartFrame,columns=("pid","name","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.cart_Table=ttk.Treeview(cartFrame,columns=("Invoice_number","[Product Name]","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.cart_Table.xview)
         scrolly.config(command=self.cart_Table.yview)
 
-        self.cart_Table.heading("pid",text="PID")
-        self.cart_Table.heading("name",text="Name")
+        self.cart_Table.heading("Invoice_number",text="Invoice No")
+        self.cart_Table.heading("[Product Name]",text="Product Name")
         self.cart_Table.heading("price",text="Price")
         self.cart_Table.heading("qty",text="QTY")
 
         self.cart_Table["show"]="headings"
 
-        self.cart_Table.column("pid",width=40)
-        self.cart_Table.column("name",width=100) 
+        self.cart_Table.column("Invoice_number",width=40)
+        self.cart_Table.column("[Product Name]",width=100) 
         self.cart_Table.column("price",width=90)
         self.cart_Table.column("qty",width=40)
         self.cart_Table.pack(fill=BOTH,expand=1)
@@ -153,7 +153,7 @@ class BillClass:
     
 
         #======Add Cart Widgets Frame ===============
-        self.var_pid=StringVar()
+        self.var_Invoice_number=StringVar()
         self.var_pname=StringVar()
         self.var_price=StringVar()
         self.var_qty=StringVar()
@@ -237,8 +237,8 @@ class BillClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            #self.product_Table=ttk.Treeview(productFrame3,columns=("pid","name","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
-            cur.execute("select * from product")
+            #self.product_Table=ttk.Treeview(productFrame3,columns=("Invoice_number","name","price","qty"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+            cur.execute("select Invoice_number,[Product Name],price,qty from product")
             rows=cur.fetchall()
             self.product_Table.delete(*self.product_Table.get_children())
             for row in rows:
@@ -249,28 +249,8 @@ class BillClass:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
             
 
-    def search(self):
-        con=sqlite3.connect(database='ims.db')
-        cur=con.cursor()
-        try:
-            if self.var_search.get()=="":
-                messagebox.showerror("Error","Search input should be required ",parent=self.root)
-                cur.execute("select * from product")
-            else:
-                query = f"SELECT * FROM product WHERE [Product Name] LIKE '%"+self.var_search.get()+"%'"
-                cur.execute(query, ('%' + self.var_search.get() + '%',))
+    
 
-                rows=cur.fetchall()
-                if len(rows)!= 0:
-                    self.product_Table.delete(*self.product_Table.get_children())
-                    for row in rows:
-                        self.product_Table.insert('',END,values=row)
-                else:
-                    messagebox.showerror("Error","No Record Found",parent=self.root)
-
-        except Exception as ex:
-            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
-            
 
 
 if __name__ == "__main__":
