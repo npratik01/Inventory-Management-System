@@ -44,7 +44,7 @@ class salesClass:
 
 
         scrolly2=Scrollbar(billFrame,orient=VERTICAL)
-        self.billArea=Text(billFrame,font=("goudy old style",15 ),bg="lightyellow",yscrollcommand=scrolly2.set)
+        self.billArea=Text(billFrame,bg="lightyellow",yscrollcommand=scrolly2.set)
         scrolly2.pack(side=RIGHT,fill=Y)
         scrolly2.config(command=self.billArea.yview)
         self.billArea.pack(fill=BOTH,expand=1)

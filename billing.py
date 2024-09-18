@@ -3,6 +3,9 @@ from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
 import time
+import os
+import tempfile
+
 
 class BillClass:
     def __init__(self, root):
@@ -11,6 +14,7 @@ class BillClass:
         self.root.title("Inventory Management System | Team Third Axis")
         self.root.config(bg = "white")
         self.cart_list=[]
+        self.chk_print=0
 
         #== title ==
         # self.icon_title = PhotoImage(file="") 
@@ -177,7 +181,7 @@ class BillClass:
         self.lbl_inStock=Label(addCartButtonWidgetsFrames,text="In Stock",font=("times new roman",15),bg="white")
         self.lbl_inStock.place(x=5,y=70)
 
-        btn_clearCart=Button(addCartButtonWidgetsFrames,text="Clear",font=("times new roman",15, "bold"),bg="lightgrey",cursor="hand2").place(x=180,y=70,width=150,height=30)
+        btn_clearCart=Button(addCartButtonWidgetsFrames,text="Clear",command=self.clear_cart,font=("times new roman",15, "bold"),bg="lightgrey",cursor="hand2").place(x=180,y=70,width=150,height=30)
         btn_addCart=Button(addCartButtonWidgetsFrames,text="Add | Update Cart",command=self.add_update_cart,font=("times new roman",15, "bold"),bg="orange",cursor="hand2").place(x=340,y=70,width=180,height=30)
 
 
@@ -207,10 +211,10 @@ class BillClass:
         self.lbl_net_pay=Label(billMenuFrame,text="Net Pay\n[0]",font=("goudy old style",15,"bold"),bg="#607d8b",fg="white")
         self.lbl_net_pay.place(x=246,y=5,width=145,height=70)
 
-        btn_print=Button(billMenuFrame,text="Print",cursor="hand2",font=("goudy old style",15,"bold"),bg="lightgreen",fg="white")
+        btn_print=Button(billMenuFrame,text="Print",command=self.print_bill,cursor="hand2",font=("goudy old style",15,"bold"),bg="lightgreen",fg="white")
         btn_print.place(x=2,y=80,width=100,height=50)
 
-        btn_clearAll=Button(billMenuFrame,text="Clear All",cursor="hand2",font=("goudy old style",15,"bold"),bg="grey",fg="white")
+        btn_clearAll=Button(billMenuFrame,text="Clear All",command=self.clearAll,cursor="hand2",font=("goudy old style",15,"bold"),bg="grey",fg="white")
         btn_clearAll.place(x=105,y=80,width=110,height=50)
 
         btn_generate=Button(billMenuFrame,text="Generate/Save Bill",command=self.generate_bill,cursor="hand2",font=("goudy old style",15,"bold"),bg="#009688",fg="white")
@@ -220,7 +224,7 @@ class BillClass:
 
         self.show()
         # self.bill_Top()
-
+        self.update_datetime()
 
 
 #============== All Functions=========================
@@ -376,10 +380,17 @@ class BillClass:
             self.bill_middle()
             #==============Bill Bottom================
             self.bill_bottom()
-           
 
+            self.chk_print=1
+            fp=open(f'bill/{str(self.invoice)}.txt','w')
+            fp.write(self.txt_billArea.get('1.0',END))
+            fp.close()
+            messagebox.showinfo("Saved", "Bill has beenn Generated Successfully",parent=self.root)
+
+           
+           
     def bill_Top(self):
-        invoice=int(time.strftime("%H%M%S"))+int(time.strftime("%d%m%Y"))
+        self.invoice=int(time.strftime("%H%M%S"))+int(time.strftime("%d%m%Y"))
         bill_top_temp=f''' 
 \tGCOEJ
   Inventory Management System
@@ -387,7 +398,7 @@ Phone No. 74994***** ,\nJalgaon-425001
 {str("="*52)}
 Customer Name : {self.var_cname.get()}
 Ph No. : {self.var_contact.get()}
-Bill No. {str(invoice)}\nDate : {str(time.strftime("%d%m%Y"))}
+Bill No. {str(self.invoice)}\nDate : {str(time.strftime("%d%m%Y"))}
 {str("="*52)}
 Product Name\tQTY\t  Price
 {str("="*52)}
@@ -406,13 +417,64 @@ Net Pay\t\tRs{self.net_pay }
         self.txt_billArea.insert(END,bill_bottom_temp)
 
     def bill_middle(self):
-        for row in self.cart_list:
-            name=row[1]
-            qty=int(row[3])
-            price=float((row[2])*int(row[3]))
-            price=str(price)
-            self.txt_billArea.insert(END,"\n"+name+"\t"+str(qty)+"\tRs."+price)
-          
+        con=sqlite3.connect(database=r"ims.db")
+        cur=con.cursor()
+        try:
+            for row in self.cart_list:
+                
+                 
+                name=row[1]
+                qty=int(row[3])
+                price=float((row[2])*int(row[3]))
+                price=str(price)
+                self.txt_billArea.insert(END,"\n"+name+"\t"+str(qty)+"\tRs."+price)
+                # ======update quantity in product table
+                cur.execute('Update product set qty=? where pid=?',(
+                    qty
+                ))
+                con.commit()
+            con.close()
+            self.show()
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
+            
+
+    def clear_cart(self):
+        self.var_Invoice_number.set('')
+        self.var_pname.set('')
+        self.var_price.set('')
+        self.var_qty.set('')
+        self.lbl_inStock.config(text="In Stock")  
+        self.var_stock.set('')
+
+    def clearAll(self):
+        del self.cart_list[:]
+        self.var_cname.set('')
+        self.var_contact.set('')
+        self.txt_billArea.delete('1.0',END)
+        self.cTitle.config(text=f"Cart \tTotal Product : [0]")
+        self.var_search.set('')
+        self.clear_cart()
+        self.show()
+        self.show_cart()
+        self.chk_print=0
+
+    def update_datetime(self):
+        time_=time.strftime("%I:%M:%S")
+        date_=time.strftime("%d-%m-%Y")
+        self.lbl_clock.config(text=f"Welcome to Inventory Management System \t\t Date : {str(date_)} \t\t Time : {str(time_)} ")
+        self.lbl_clock.after(200,self.update_datetime)
+
+    def print_bill(self):
+        if self.chk_print==1:
+            messagebox.showinfo("Print","Please wait while Printing",parent=self.root)
+            newfile=tempfile.mktemp('.txt')
+            open(newfile,'w').write(self.txt_billArea.get('1.0',END))
+            os.startfile(newfile,'print')
+        else:
+            messagebox.showinfo("Print","Please generate bill, to print the reciept",parent=self.root)
+            
+
 
 if __name__ == "__main__":
     root = Tk()
