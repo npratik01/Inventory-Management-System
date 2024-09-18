@@ -2,6 +2,7 @@ from tkinter import*
 from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
+import time
 
 class BillClass:
     def __init__(self, root):
@@ -9,6 +10,7 @@ class BillClass:
         self.root.geometry("1350x700+0+0")
         self.root.title("Inventory Management System | Team Third Axis")
         self.root.config(bg = "white")
+        self.cart_list=[]
 
         #== title ==
         # self.icon_title = PhotoImage(file="") 
@@ -37,6 +39,7 @@ class BillClass:
 
         #======Product search Frame ===============
         self.var_search=StringVar()
+        self.var_mem_searchtxt = StringVar()
         ProductFrame2 = Frame(ProductFrame1,bd=2,relief=RIDGE,bg="white")
         ProductFrame2.place(x=2,y=42,width=398,height=90)
 
@@ -44,8 +47,8 @@ class BillClass:
 
         lbl_search=Label(ProductFrame2,text="Product Name",font=("times new roman",15,"bold"),bg="white").place(x=2,y=43)
         txt_search=Entry(ProductFrame2,textvariable=self.var_search,font=("times new roman",15,),bg="lightyellow").place(x=130,y=47,width=150,height=22)
-        btn_search=Button(ProductFrame2,text="Search",font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
-        btn_showAll=Button(ProductFrame2,text="Show All",font=("goudy old style",15),bg="#083531",fg="white",cursor="hand2").place(x=285,y=10,width=100,height=25)
+        btn_search=Button(ProductFrame2,text="Search",command=self.search,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=285,y=45,width=100,height=25)
+        btn_showAll=Button(ProductFrame2,text="Show All",command=self.show,font=("goudy old style",15),bg="#083531",fg="white",cursor="hand2").place(x=285,y=10,width=100,height=25)
 
         #======Product Details Frame ===============
         productFrame3 = Frame(ProductFrame1,bd=3,relief=RIDGE)
@@ -72,7 +75,7 @@ class BillClass:
         self.product_Table.column("price",width=100)
         self.product_Table.column("qty",width=100)
         self.product_Table.pack(fill=BOTH,expand=1)
-        self.product_Table.bind("<ButtonRelease-1>",self.get_input)
+        self.product_Table.bind("<ButtonRelease-1>",self.get_data)
         lbl_note=Label(ProductFrame1,text="Note: 'Enter 0 Quantity to remove product from the cart'",font=("goudy old style",12),anchor='w',bg="white",fg="red").pack(side=BOTTOM,fill=X)
 
         #========== Customer Frame =================
@@ -125,7 +128,8 @@ class BillClass:
         #======Cart Frame ===============
         cartFrame = Frame(calCartFrame,bd=3,relief=RIDGE)
         cartFrame.place(x=280,y=8,width=245,height=342)
-        cTitle=Label(cartFrame,text="Cart \tTotal Product : [0]",font=("goudy old style",15),bg="lightgrey").pack(side=TOP,fill=X)
+        self.cTitle=Label(cartFrame,text="Cart \tTotal Product : [0]",font=("goudy old style",15),bg="lightgrey")
+        self.cTitle.pack(side=TOP,fill=X)
 
 
         scrolly = Scrollbar(cartFrame,orient=VERTICAL)
@@ -144,12 +148,12 @@ class BillClass:
 
         self.cart_Table["show"]="headings"
 
-        self.cart_Table.column("Invoice_number",width=40)
+        self.cart_Table.column("Invoice_number",width=80)
         self.cart_Table.column("[Product Name]",width=100) 
-        self.cart_Table.column("price",width=90)
+        self.cart_Table.column("price",width=80)
         self.cart_Table.column("qty",width=40)
         self.cart_Table.pack(fill=BOTH,expand=1)
-        # self.cart_Table.bind("<ButtonRelease-1>",self.get_data)
+        self.cart_Table.bind("<ButtonRelease-1>",self.get_data_cart)
     
 
         #======Add Cart Widgets Frame ===============
@@ -170,11 +174,11 @@ class BillClass:
         lbl_pPrice=Label(addCartButtonWidgetsFrames,text="Quantity",font=("times new roman",15),bg="white").place(x=390,y=5)
         lbl_pPrice=Entry(addCartButtonWidgetsFrames,textvariable=self.var_qty,font=("times new roman",15),bg="lightyellow").place(x=390,y=35,width=120,height=22)
 
-        self.lbl_inStock=Label(addCartButtonWidgetsFrames,text="In Stock [9999]",font=("times new roman",15),bg="white")
+        self.lbl_inStock=Label(addCartButtonWidgetsFrames,text="In Stock",font=("times new roman",15),bg="white")
         self.lbl_inStock.place(x=5,y=70)
 
         btn_clearCart=Button(addCartButtonWidgetsFrames,text="Clear",font=("times new roman",15, "bold"),bg="lightgrey",cursor="hand2").place(x=180,y=70,width=150,height=30)
-        btn_addCart=Button(addCartButtonWidgetsFrames,text="Add | Update Cart",font=("times new roman",15, "bold"),bg="orange",cursor="hand2").place(x=340,y=70,width=180,height=30)
+        btn_addCart=Button(addCartButtonWidgetsFrames,text="Add | Update Cart",command=self.add_update_cart,font=("times new roman",15, "bold"),bg="orange",cursor="hand2").place(x=340,y=70,width=180,height=30)
 
 
 #============= Billing Area=================
@@ -209,12 +213,13 @@ class BillClass:
         btn_clearAll=Button(billMenuFrame,text="Clear All",cursor="hand2",font=("goudy old style",15,"bold"),bg="grey",fg="white")
         btn_clearAll.place(x=105,y=80,width=110,height=50)
 
-        btn_generate=Button(billMenuFrame,text="Generate/Save Bill",cursor="hand2",font=("goudy old style",15,"bold"),bg="#009688",fg="white")
+        btn_generate=Button(billMenuFrame,text="Generate/Save Bill",command=self.generate_bill,cursor="hand2",font=("goudy old style",15,"bold"),bg="#009688",fg="white")
         btn_generate.place(x=219,y=80,width=172,height=50)
 
         footer=Label(self.root,text="Inventory Management System | Team Third Axis",font=("times new roman",11),bg="#4d636d").pack(side=BOTTOM,fill=X)
 
         self.show()
+        # self.bill_Top()
 
 
 
@@ -237,20 +242,177 @@ class BillClass:
         con=sqlite3.connect(database='ims.db')
         cur=con.cursor()
         try:
-            cur.execute("select * from product")
+            cur.execute("select Invoice_number,[Product Name],price,qty from product")
             rows=cur.fetchall()
-            self.product_tabel.delete(*self.product_tabel.get_children())
+            self.product_Table.delete(*self.product_Table.get_children())
             for row in rows:
-                self.product_tabel.insert('',END,values=row)
+                self.product_Table.insert('',END,values=row)
 
 
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
             
+    def search(self):
+        invoice_number = self.var_search.get().strip()
+        product_name = self.var_mem_searchtxt.get().strip()
+
+        # Build the SQL query based on the presence of input values
+        query = "SELECT Invoice_number, [Product Name], price, qty FROM product WHERE 1=1"
+        params = []
+
+        if invoice_number:
+            query += " AND Invoice_number LIKE ?"
+            params.append(f"%{invoice_number}%")
+
+        if product_name:
+            query += " AND [Product Name] LIKE ?"
+            params.append(f"%{product_name}%")
+
+        con = sqlite3.connect('ims.db')
+        cur = con.cursor()
+        try:
+            cur.execute(query, params)
+            rows = cur.fetchall()
+            self.product_Table.delete(*self.product_Table.get_children())
+            for row in rows:
+                self.product_Table.insert('', END, values=row)
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
+        finally:
+            con.close()
+
+    def get_data(self, ev):
+        f = self.product_Table.focus()
+        content = self.product_Table.item(f)
+        row = content['values']
+        self.var_Invoice_number.set(row[0])
+        self.var_pname.set(row[1])
+        self.var_price.set(row[2])
+        self.lbl_inStock.config(text=f"In Stock[{str(row[3])}]")  
+        self.var_stock.set(row[3])
+        self.var_qty.set('1')  
+
+    def get_data_cart(self, ev):
+        f = self.cart_Table.focus()
+        content = self.cart_Table.item(f)
+        row = content['values']
+        self.var_Invoice_number.set(row[0])
+        self.var_pname.set(row[1])
+        self.var_price.set(row[2])
+        self.var_qty.set(row[3])
+        self.lbl_inStock.config(text=f"In Stock[{str(row[4])}]")  
+        self.var_stock.set(row[4])
+          
+
+    def add_update_cart(self):
+        if self.var_Invoice_number.get()=='':
+            messagebox.showerror('Error',"Please select Product from the list",parent=self.root)
+
+        elif self.var_qty.get()=='':
+            messagebox.showerror('Error',"Quantity is Required",parent=self.root)
+        elif (int(self.var_qty.get()) > int(self.var_stock.get())):
+            messagebox.showerror('Error',"Invalid Quantity",parent=self.root)
+        else:
+           #price_cal=float(int(self.var_qty.get())*float(self.var_price.get()))
+            price_cal=self.var_price.get()
+            cart_data=[self.var_Invoice_number.get(),self.var_pname.get(),price_cal,int(self.var_qty.get()),self.var_stock.get()]
+
+            #====== Update Cart============
+            present='no'
+            index_ = -1
+            for row in self.cart_list:
+                if self.var_Invoice_number.get()==row[0]:
+                    present='yes'
+                    break
+                index_+=1
+            if present=='yes':
+                op=messagebox.askyesno("Confirm","Product already present\nDo you want to Update | Remove from the Cart List",parent=self.root)
+                if op==True:
+                    if self.var_qty.get()=="0":
+                        self.cart_list.pop(index_)
+                    else:
+                        # self.cart_list[index_][2]=price_cal #price
+                        self.cart_list[index_][3]=self.var_qty.get() #quantity
+
+            else:   
+                self.cart_list.append(cart_data)
+            self.show_cart()
+            self.bill_update()
+    def bill_update(self):
+        self.bill_amt=0
+        self.net_pay=0
+        self.discount=0
+        for row in self.cart_list:
+            self.bill_amt=self.bill_amt+(float(row[2])*int(row[3]))
+        self.discount=(self.bill_amt*5)/100
+        self.net_pay=self.bill_amt-self.discount 
+        self.lbl_amt.config(text=f'Bill Amt\n{str(self.bill_amt)}')
+        self.lbl_net_pay.config(text=f'Net Pay\n{str(self.net_pay)}')
+        self.cTitle.config(text=f"Cart \tTotal Product : [{str(len(self.cart_list))}]")
+
+
+
+    def show_cart(self):
+        try:
+            self.cart_Table.delete(*self.cart_Table.get_children())
+            for row in self.cart_list:
+                self.cart_Table.insert('',END,values=row)
+
+
+        except Exception as ex:
+            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
 
     
+    def generate_bill(self):
+        if self.var_cname.get()=='' or self.var_contact.get()=='':
+            messagebox.showerror("Error",f"Customer Details are required",parent=self.root)
+        elif len(self.cart_list)==0:
+            messagebox.showerror("Error",f"Please Add the product to the Cart",parent=self.root)
 
+        else:
+            #==============Bill Top================
+            self.bill_Top()
+            #==============Bill Middle================
+            self.bill_middle()
+            #==============Bill Bottom================
+            self.bill_bottom()
+           
 
+    def bill_Top(self):
+        invoice=int(time.strftime("%H%M%S"))+int(time.strftime("%d%m%Y"))
+        bill_top_temp=f''' 
+\tGCOEJ
+  Inventory Management System
+Phone No. 74994***** ,\nJalgaon-425001
+{str("="*52)}
+Customer Name : {self.var_cname.get()}
+Ph No. : {self.var_contact.get()}
+Bill No. {str(invoice)}\nDate : {str(time.strftime("%d%m%Y"))}
+{str("="*52)}
+Product Name\tQTY\t  Price
+{str("="*52)}
+        '''
+        self.txt_billArea.delete('1.0',END)
+        self.txt_billArea.insert('1.0',bill_top_temp)
+
+    def bill_bottom(self):
+        bill_bottom_temp=f'''
+{str("="*52)} 
+Bill Amount\t\tRs.{self.bill_amt}
+Discount\t\tRs.{self.discount}
+Net Pay\t\tRs{self.net_pay }
+{str("="*52)}\n
+        '''
+        self.txt_billArea.insert(END,bill_bottom_temp)
+
+    def bill_middle(self):
+        for row in self.cart_list:
+            name=row[1]
+            qty=int(row[3])
+            price=float((row[2])*int(row[3]))
+            price=str(price)
+            self.txt_billArea.insert(END,"\n"+name+"\t"+str(qty)+"\tRs."+price)
+          
 
 if __name__ == "__main__":
     root = Tk()

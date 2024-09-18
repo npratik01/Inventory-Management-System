@@ -17,7 +17,7 @@ def create_db():
                 [Product Name] TEXT, 
                 [Invoice date] TEXT, 
                 Price INTEGER, 
-                qty REAL,
+                qty INTEGER,
                 [Total Invoice Amount] TEXT, 
                 [Supplier Name] TEXT, 
                 [Vendor MO NO] TEXT, 
