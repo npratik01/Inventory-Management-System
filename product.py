@@ -2,6 +2,7 @@ from tkinter import*
 from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
+import os
 
 
 class productClass:
@@ -35,6 +36,7 @@ class productClass:
 
         #=======title=======
         title = Label(product_Frame,text="Manage Product Details",font=("goudy old style",20),bg="#0f4d7d",fg="white",).pack(side=TOP,fill=X)
+        btn_logout = Button(self.root, text="Logout",command=self.logout, font=("times new roman", 15, "bold"), bg = "red",fg="white",cursor="hand2").place(x=1420, y=10, height=50, width=100)
 
         
         lbl_Invoice_number = Label(product_Frame,text="Invoice Number :",font=("goudy old style",20)).place(x=30,y=60)
@@ -407,7 +409,9 @@ class productClass:
             # Ensure the connection is closed after the operation
             con.close()
 
-
+    def logout(self):
+        self.root.destroy()
+        os.system("python login.py")
         
 
 

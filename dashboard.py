@@ -7,6 +7,7 @@ from sales import salesClass
 import sqlite3
 from tkinter import messagebox
 import time
+import os
 
 class IMS:
     def __init__(self, root):
@@ -26,7 +27,7 @@ class IMS:
 
 
         #== button_logout ==
-        btn_logout = Button(self.root, text="Logout", font=("times new roman", 15, "bold"), bg = "white",cursor="hand2").place(x=1350, y=10, height=50, width=150)
+        btn_logout = Button(self.root, text="Logout",command=self.logout, font=("times new roman", 15, "bold"), bg = "white",cursor="hand2").place(x=1350, y=10, height=50, width=150)
 
         # == Clock == 
         self.lbl_clock = Label(self.root, text="Welcome to Inventory Management System \t\t Date : DD-MM-YYYY \t\t Time : HH:MM:SS ", font=("times new roman", 15),bg="#4d636d",fg="white")
@@ -120,6 +121,10 @@ class IMS:
         except Exception as ex:
             messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
             
+
+    def logout(self):
+        self.root.destroy()
+        os.system("python login.py")
 
     
 
