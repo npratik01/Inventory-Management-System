@@ -3,6 +3,7 @@ from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
+import os
 
 
 class productClass:
@@ -17,6 +18,7 @@ class productClass:
         self.var_invoice_no=StringVar()
         self.var_invoice_date=StringVar()
         self.var_price_item=StringVar()
+        self.var_qty=StringVar()
         self.var_inovice_amount=StringVar()
         self.var_supp_name=StringVar()
         self.var_mo_no=StringVar()
@@ -36,12 +38,14 @@ class productClass:
 
         #=======title=======
         title = Label(product_Frame,text="Manage Product Details",font=("goudy old style",20),bg="#0f4d7d",fg="white",).pack(side=TOP,fill=X)
+        btn_logout = Button(self.root, text="Logout",command=self.logout, font=("times new roman", 15, "bold"), bg = "red",fg="white",cursor="hand2").place(x=1420, y=10, height=50, width=100)
 
         
         lbl_Invoice_number = Label(product_Frame,text="Invoice Number :",font=("goudy old style",20)).place(x=30,y=60)
         lbl_product_name = Label(product_Frame,text="Product Name :",font=("goudy old style",20)).place(x=30,y=110)
         lbl_Invoice_date = Label(product_Frame,text="Invoice Date :",font=("goudy old style",20)).place(x=30,y=160)
         lbl_Price_of_the_item= Label(product_Frame,text="Price of the Item :",font=("goudy old style",20)).place(x=30,y=210)
+<<<<<<< HEAD
         lbl_Invoice_Amount= Label(product_Frame,text="Total Invoice Amount :",font=("goudy old style",20)).place(x=30,y=260)
         lbl_supplier_name = Label(product_Frame,text="Supplier Name :",font=("goudy old style",20)).place(x=30,y=310)
         lbl_mobile_number = Label(product_Frame,text="Mobile Number of Vendor :",font=("goudy old style",20)).place(x=30,y=360)
@@ -51,6 +55,17 @@ class productClass:
         lbl_curr_posi_name = Label(product_Frame,text="Currently Position :",font=("goudy old style",20)).place(x=30,y=560)
         lbl_curr_posi_no = Label(product_Frame,text="Currently Number :",font=("goudy old style",20)).place(x=30,y=610)
         lbl_upload_pdf = Label(product_Frame,text="Upload PDF :",font=("goudy old style",20)).place(x=30,y=660)
+=======
+        lbl_qty_of_the_item= Label(product_Frame,text="Quantity :",font=("goudy old style",20)).place(x=30,y=260)
+        lbl_Invoice_Amount= Label(product_Frame,text="Total Invoice Amount :",font=("goudy old style",20)).place(x=30,y=310)
+        lbl_supplier_name = Label(product_Frame,text="Supplier Name :",font=("goudy old style",20)).place(x=30,y=360)
+        lbl_mobile_number = Label(product_Frame,text="Mobile Number of Vendor :",font=("goudy old style",20)).place(x=30,y=410)
+        lbl_email_vendor= Label(product_Frame,text="Email of Vendor :",font=("goudy old style",20)).place(x=30,y=460)
+        lbl_received_by_student_name = Label(product_Frame,text="Received by Student Name :",font=("goudy old style",20)).place(x=30,y=510)
+        lbl_received_mo_no = Label(product_Frame,text="Received by Student Mob No. :",font=("goudy old style",20)).place(x=30,y=560)
+        lbl_curr_posi_name = Label(product_Frame,text="Currently Position :",font=("goudy old style",20)).place(x=30,y=610)
+        lbl_curr_posi_no = Label(product_Frame,text="Currently Number :",font=("goudy old style",20)).place(x=30,y=660)
+>>>>>>> 0c3b234db4ac8918871f09894f7f83f5c7b1082b
 
 
 
@@ -70,6 +85,7 @@ class productClass:
         txt_name = Entry(product_Frame,textvariable=self.var_cat,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=110,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_invoice_date,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=160,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_price_item,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=210,width=200)
+<<<<<<< HEAD
         txt_name = Entry(product_Frame,textvariable=self.var_inovice_amount,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=260,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_supp_name,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=310,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=360,width=200)
@@ -79,6 +95,17 @@ class productClass:
         txt_name = Entry(product_Frame,textvariable=self.var_curr_posi,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=560,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_curr_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=610,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_pdf_path,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=660,width=200)
+=======
+        txt_name = Entry(product_Frame,textvariable=self.var_qty,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=260,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_inovice_amount,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=310,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_supp_name,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=360,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=410,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_email_vendor,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=460,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_received_std_name,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=510,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_received_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=560,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_curr_posi,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=610,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_curr_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=660,width=200)
+>>>>>>> 0c3b234db4ac8918871f09894f7f83f5c7b1082b
 
          #==== Buttons =====
         btn_add = Button(product_Frame,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=10,y=700,width=100,height=40)
@@ -108,7 +135,7 @@ class productClass:
         scrolly = Scrollbar(p_frame,orient=VERTICAL)
         scrollx = Scrollbar(p_frame,orient=HORIZONTAL)
         
-        self.product_tabel=ttk.Treeview(p_frame,columns=("Invoice_number","Product Name","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.product_tabel=ttk.Treeview(p_frame,columns=("Invoice_number","Product Name","Invoice date","Price","qty","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.product_tabel.xview)
@@ -118,6 +145,7 @@ class productClass:
         self.product_tabel.heading("Product Name",text="Product Name")
         self.product_tabel.heading("Invoice date",text="Invoice Date")
         self.product_tabel.heading("Price",text="Price")
+        self.product_tabel.heading("qty",text="Quantity")
         self.product_tabel.heading("Total Invoice Amount",text="Total Invoice Amount")
         self.product_tabel.heading("Supplier Name",text="Supplier Name")
         self.product_tabel.heading("Vendor MO NO",text="Vendor Mob No.")
@@ -136,6 +164,7 @@ class productClass:
         self.product_tabel.column("Product Name",width=90)
         self.product_tabel.column("Invoice date",width=100)
         self.product_tabel.column("Price",width=100)
+        self.product_tabel.column("qty",width=100)
         self.product_tabel.column("Total Invoice Amount",width=100)
         self.product_tabel.column("Supplier Name",width=100)
         self.product_tabel.column("Vendor MO NO",width=100)
@@ -155,7 +184,7 @@ class productClass:
         cur=con.cursor()
         try:
             if self.var_invoice_no.get()=="":
-                messagebox.showerror("Error","INVOICE NUMBER Must be required",parent=self.root)
+                messagebox.showerror("Error","Invoice Number must be required",parent=self.root)
             else:               # "Product Name","Invoice number","Invoice date","Price","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"
                 cur.execute("SELECT * FROM product WHERE [Invoice_number]=?",(self.var_invoice_no.get(),))
                 row=cur.fetchone()
@@ -164,18 +193,19 @@ class productClass:
                 else:
                     cur.execute("""
                         INSERT INTO product (
-                            [Invoice_number],[Product Name], [Invoice date], [Price], 
+                            [Invoice_number],[Product Name], [Invoice date], [Price], [qty],
                             [Total Invoice Amount], [Supplier Name], [Vendor MO NO], 
                             [Email of vendor], [R Student Name], [R Std Mo No], 
                             [Current position], [Current Mo No]
                         ) 
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?,?)
                         """, (
                         
                         self.var_invoice_no.get(),
                         self.var_cat.get(),
                         self.var_invoice_date.get(),
                         self.var_price_item.get(),
+                        self.var_qty.get(),
                         self.var_inovice_amount.get(),
                         self.var_supp_name.get(),
                         self.var_mo_no.get(),
@@ -183,7 +213,7 @@ class productClass:
                         self.var_received_std_name.get(),
                         self.var_received_mo_no.get(),
                         self.var_curr_posi.get(),
-                        self.var_curr_mo_no.get()
+                        self.var_curr_mo_no.get(),
                     ))
                     
                     # cur.execute("Insert into product (Product Name,Invoice_number,Invoice date,Price,Total Invoice Amount,Supplier Name,Vendor MO NO,Email of vendor,R Student Name,R Std Mo No,Current position,Current Mo No) values(?,?,?,?,?,?,?,?,?,?,?,?)",(
@@ -203,6 +233,7 @@ class productClass:
                     con.commit()
                     messagebox.showinfo("Success","Product Added Successfully",parent=self.root)
                     self.show()
+                    
 
                 
         except Exception as ex:
@@ -244,14 +275,15 @@ class productClass:
         self.var_cat.set(row[1])
         self.var_invoice_date.set(row[2])
         self.var_price_item.set(row[3])
-        self.var_inovice_amount.set(row[4])
-        self.var_supp_name.set(row[5])
-        self.var_mo_no.set(row[6])
-        self.var_email_vendor.set(row[7])
-        self.var_received_std_name.set(row[8])
-        self.var_received_mo_no.set(row[9])
-        self.var_curr_posi.set(row[10])
-        self.var_curr_mo_no.set(row[11])
+        self.var_qty.set(row[4])
+        self.var_inovice_amount.set(row[5])
+        self.var_supp_name.set(row[6])
+        self.var_mo_no.set(row[7])
+        self.var_email_vendor.set(row[8])
+        self.var_received_std_name.set(row[9])
+        self.var_received_mo_no.set(row[10])
+        self.var_curr_posi.set(row[11])
+        self.var_curr_mo_no.set(row[12])
 
 #======== UPDATE DATA =======================================================================================
 
@@ -274,6 +306,7 @@ class productClass:
                             [Product Name]=?, 
                             [Invoice date]=?, 
                             [Price]=?, 
+                            [qty]=?,
                             [Total Invoice Amount]=?, 
                             [Supplier Name]=?, 
                             [Vendor MO NO]=?, 
@@ -289,6 +322,7 @@ class productClass:
                     self.var_cat.get(),
                     self.var_invoice_date.get(),
                     self.var_price_item.get(),
+                    self.var_qty.get(),
                     self.var_inovice_amount.get(),
                     self.var_supp_name.get(),
                     self.var_mo_no.get(),
@@ -338,6 +372,7 @@ class productClass:
         self.var_cat.set(""),
         self.var_invoice_date.set(""),
         self.var_price_item.set(""),
+        self.var_qty.set(""),
         self.var_inovice_amount.set(""),
         self.var_supp_name.set(""),
         self.var_mo_no.set(""),
@@ -345,8 +380,8 @@ class productClass:
         self.var_received_std_name.set(""),
         self.var_received_mo_no.set(""),
         self.var_curr_posi.set(""),
-        self.var_curr_mo_no.set("")
-        self.var_mem_searchtxt.set("")
+        self.var_curr_mo_no.set(""),
+        self.var_mem_searchtxt.set(""),
         self.var_mem_searchby.set("Select")
 
         self.show()
@@ -400,7 +435,9 @@ class productClass:
             # Ensure the connection is closed after the operation
             con.close()
 
-
+    def logout(self):
+        self.root.destroy()
+        os.system("python login.py")
         
 
 
@@ -409,4 +446,4 @@ class productClass:
 if __name__ == "__main__":
     root = Tk()
     obj = productClass(root)
-    root.mainloop()        
+    root.mainloop()
