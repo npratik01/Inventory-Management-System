@@ -3,6 +3,8 @@ from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
 import os
+from tkinter import filedialog
+import tempfile
 
 
 class productClass:
@@ -86,6 +88,12 @@ class productClass:
         btn_update = Button(product_Frame,text="Update",command=self.update,font=("goudy old style",15),bg="#4caf50",fg="white",cursor="hand2").place(x=120,y=700,width=100,height=40)
         btn_delete = Button(product_Frame,text="Delete",command=self.delete,font=("goudy old style",15),bg="#f44336",fg="white",cursor="hand2").place(x=230,y=700,width=100,height=40)
         btn_clear = Button(product_Frame,text="Clear",command=self.clear,font=("goudy old style",15),bg="#607d8b",fg="white",cursor="hand2").place(x=340,y=700,width=100,height=40)
+        
+        btn_upload = Button(product_Frame, text="Upload File",command=self.upload_file,font=("goudy old style", 15), bg="#4caf50", fg="white", cursor="hand2")
+        btn_upload.place(x=450, y=700, width=100, height=40)
+
+        btn_view_file = Button(product_Frame, text="View File", command=self.view_file,font=("goudy old style", 15), bg="#4caf50", fg="white", cursor="hand2")
+        btn_view_file.place(x=570, y=700, width=100, height=40)
 
         #==== Seaarch Frame ====
         SearchFrame = LabelFrame(self.root,text="Search Member",font=("goudy old style",12,"bold"),bd=2,bg="white")
@@ -109,7 +117,7 @@ class productClass:
         scrolly = Scrollbar(p_frame,orient=VERTICAL)
         scrollx = Scrollbar(p_frame,orient=HORIZONTAL)
         
-        self.product_tabel=ttk.Treeview(p_frame,columns=("Invoice_number","Product Name","Invoice date","Price","qty","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
+        self.product_tabel=ttk.Treeview(p_frame,columns=("Invoice_number","Product Name","Invoice date","Price","qty","Total Invoice Amount","Supplier Name","Vendor MO NO","Email of vendor","R Student Name","R Std Mo No","Current position","Current Mo No","pdf_file"),yscrollcommand=scrolly.set,xscrollcommand=scrollx.set)
         scrollx.pack(side=BOTTOM,fill=X)
         scrolly.pack(side=RIGHT,fill=Y)
         scrollx.config(command=self.product_tabel.xview)
@@ -128,6 +136,8 @@ class productClass:
         self.product_tabel.heading("R Std Mo No",text="Rec. Std Mob No")
         self.product_tabel.heading("Current position",text="Current Position")
         self.product_tabel.heading("Current Mo No",text="Current Mob No")
+        self.product_tabel.heading("pdf_file",text="View Document")
+        
 
         
 
@@ -147,6 +157,8 @@ class productClass:
         self.product_tabel.column("R Std Mo No",width=100)
         self.product_tabel.column("Current position",width=100)
         self.product_tabel.column("Current Mo No",width=100)
+        self.product_tabel.column("pdf_file",width=100)
+
         self.product_tabel.pack(fill=BOTH,expand=1)
         self.product_tabel.bind("<ButtonRelease-1>",self.get_data)
 
@@ -408,6 +420,65 @@ class productClass:
         finally:
             # Ensure the connection is closed after the operation
             con.close()
+
+    def upload_file(self):
+        # Open file dialog to select PDF
+        file_path = filedialog.askopenfilename(title="Select PDF File",
+                                                filetypes=(("PDF files", "*.pdf"), ("All files", "*.*")))
+        if not file_path:
+            return  # If no file is selected
+
+        # Read the file content
+        with open(file_path, 'rb') as file:
+            file_data = file.read()
+
+        # Store in database
+        self.store_file_in_db(file_data)
+
+    def store_file_in_db(self, file_data):
+        con = sqlite3.connect(database='ims.db')
+        cur = con.cursor()
+        try:
+            # Assuming you have a column 'pdf_file' in your 'product' table to store the PDF
+            cur.execute("UPDATE product SET pdf_file = ? WHERE [Invoice_number] = ?", (file_data, self.var_invoice_no.get()))
+            con.commit()
+            messagebox.showinfo("Success", "File Uploaded Successfully", parent=self.root)
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
+        finally:
+            con.close()
+
+
+    def view_file(self):
+        invoice_no = self.var_invoice_no.get()
+        if not invoice_no:
+            messagebox.showerror("Error", "Please select an invoice to view the file", parent=self.root)
+            return
+
+        # Retrieve the PDF from the database
+        con = sqlite3.connect('ims.db')
+        cur = con.cursor()
+        try:
+            cur.execute("SELECT pdf_file FROM product WHERE [Invoice_number] = ?", (invoice_no,))
+            row = cur.fetchone()
+            if row is None or row[0] is None:
+                messagebox.showerror("Error", "No file found for the selected invoice", parent=self.root)
+                return
+            
+            # Save the PDF to a temporary file and open it
+            pdf_data = row[0]
+            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.pdf')
+            temp_file.write(pdf_data)
+            temp_file.close()
+
+            # Open the PDF file with the default PDF viewer
+            os.startfile(temp_file.name)
+        
+        except Exception as ex:
+            messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
+        finally:
+            con.close()
+
 
     def logout(self):
         self.root.destroy()
