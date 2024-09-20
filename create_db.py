@@ -25,11 +25,14 @@ def create_db():
                 [R Student Name] TEXT, 
                 [R Std Mo No] TEXT, 
                 [Current position] TEXT, 
-                [Current Mo No] TEXT
+                [Current Mo No] TEXT,
+                PDF_path TEXT
                 
             )
         """)
     con.commit()
+
+    
     
     
 

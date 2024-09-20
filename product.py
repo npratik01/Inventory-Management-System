@@ -1,4 +1,5 @@
 from tkinter import*
+from tkinter import filedialog, messagebox
 from PIL import Image, ImageTk
 from tkinter import ttk,messagebox
 import sqlite3
@@ -24,6 +25,7 @@ class productClass:
         self.var_received_mo_no=StringVar()
         self.var_curr_posi=StringVar()
         self.var_curr_mo_no=StringVar()
+        self.var_pdf_path = StringVar()
 
         self.var_mem_searchby = StringVar()
         self.var_mem_searchtxt = StringVar()
@@ -48,6 +50,7 @@ class productClass:
         lbl_received_mo_no = Label(product_Frame,text="Received by Student Mob No. :",font=("goudy old style",20)).place(x=30,y=510)
         lbl_curr_posi_name = Label(product_Frame,text="Currently Position :",font=("goudy old style",20)).place(x=30,y=560)
         lbl_curr_posi_no = Label(product_Frame,text="Currently Number :",font=("goudy old style",20)).place(x=30,y=610)
+        lbl_upload_pdf = Label(product_Frame,text="Upload PDF :",font=("goudy old style",20)).place(x=30,y=660)
 
 
 
@@ -75,6 +78,7 @@ class productClass:
         txt_name = Entry(product_Frame,textvariable=self.var_received_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=510,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_curr_posi,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=560,width=200)
         txt_name = Entry(product_Frame,textvariable=self.var_curr_mo_no,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=610,width=200)
+        txt_name = Entry(product_Frame,textvariable=self.var_pdf_path,font=("gaudy old style",15),bg='lightyellow').place(x=370,y=660,width=200)
 
          #==== Buttons =====
         btn_add = Button(product_Frame,text="Save",command=self.add,font=("goudy old style",15),bg="#2196f3",fg="white",cursor="hand2").place(x=10,y=700,width=100,height=40)
