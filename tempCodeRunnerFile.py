@@ -1,2 +1,5 @@
-elf.lbl_category = Label(self.root, text="Total Sales \n[ 0 ]",bd=5,relief=RIDGE,bg="#33bbf9", fg="white",font=("goudy old style",20,"bold"))
-        # se
+def update_datetime(self):
+        time_=time.strftime("%I:%M:%S")
+        date_=time.strftime("%d-%m-%Y")
+        self.lbl_clock.config(text=f"Welcome to Inventory Management System \t\t Date : {str(date_)} \t\t Time : {str(time_)} ")
+        self.lbl_clock.after(200,self.update_datetime)
