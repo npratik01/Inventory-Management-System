@@ -71,28 +71,49 @@ class LoginSystem:
         self.lbl_change_image.after(2000,self.animate)
 
 
+    import sqlite3
+
+
     def login(self):
-        con=sqlite3.connect(database=r'ims.db')
-        cur=con.cursor()
         try:
-            if self.member_id.get()=="" or self.password.get()=="":
-                messagebox.showerror("Error","All Fields are required",parent=self.root)
-            else:
-                cur.execute("select utype from member where memid=? AND pass=?" ,(self.member_id.get(),self.password.get()))
-                user=cur.fetchone()
-                if user==None:
-                    messagebox.showerror("Error","Invalid Member ID or Password",parent=self.root)
+            member_id = self.member_id.get()
+            password = self.password.get()
+
+            if not member_id or not password:
+                messagebox.showerror("Error", "All Fields are required", parent=self.root)
+                return
+
+            with sqlite3.connect('ims.db') as con:
+                cur = con.cursor()
+
+                # Check if there are any members in the table
+                cur.execute("SELECT COUNT(*) FROM member")
+                count = cur.fetchone()[0]
+
+                if count == 0:
+                    # No members exist, create the first admin member
+                    cur.execute("INSERT INTO member (memid, pass, utype) VALUES (?, ?, ?)", (member_id, password, 'Admin'))
+                    con.commit()
+                    messagebox.showinfo("Info", "No members found. Created the first member as Admin.", parent=self.root)
+                    self.root.destroy()
+                    os.system("python dashboard.py")
                 else:
-                    if user[0]=="Admin":
-                        self.root.destroy()
-                        os.system("python dashboard.py")
+                    # Proceed with login as usual
+                    cur.execute("SELECT utype FROM member WHERE memid=? AND pass=?", (member_id, password))
+                    user = cur.fetchone()
+
+                    if user is None:
+                        messagebox.showerror("Error", "Invalid Member ID or Password", parent=self.root)
                     else:
                         self.root.destroy()
-                        os.system("python product.py")
+                        if user[0] == "Admin":
+                            os.system("python dashboard.py")
+                        else:
+                            os.system("python product.py")
 
         except Exception as ex:
-            messagebox.showerror("Error",f"Error due to : {str(ex)}",parent=self.root)
-            
+            messagebox.showerror("Error", f"Error due to: {str(ex)}", parent=self.root)
+
     
     def forgetWindow(self):
         con=sqlite3.connect(database=r'ims.db')

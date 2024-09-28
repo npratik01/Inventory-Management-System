@@ -13,7 +13,7 @@ class IMS:
     def __init__(self, root):
         self.root = root
         self.root.geometry("1350x700+0+0")
-        self.root.title("Inventory Management System | Team Third Axis")
+        self.root.title("Inventory Management System | Team Third Axis | GCOEJ")
         self.root.config(bg = "white")
 
         #== title ==
@@ -39,7 +39,7 @@ class IMS:
         self.MenuLogo = ImageTk.PhotoImage(self.MenuLogo)
 
         LeftMenu = Frame(self.root,bd=2,relief=RIDGE, bg="white")
-        LeftMenu.place(x=0,y=102,width=200,height=565)
+        LeftMenu.place(x=0,y=102,width=200,height=460)
 
         lbl_menuLogo = Label(LeftMenu,image=self.MenuLogo)
         lbl_menuLogo.pack(side=TOP,fill=X)
@@ -50,7 +50,7 @@ class IMS:
         btn_supplier = Button(LeftMenu, text="Supplier",command=self.supplier, font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         btn_product = Button(LeftMenu, text="Product",command=self.product, font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         # btn_sales = Button(LeftMenu, text="Sales",command=self.sales, font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
-        btn_employee = Button(LeftMenu, text="Category", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
+        btn_employee = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
         # btn_employee = Button(LeftMenu, text="Exit", font=("times new roman", 20, "bold"), bg = "white", bd=3, cursor="hand2").pack(side=TOP,fill=X)
 
 
@@ -59,10 +59,10 @@ class IMS:
         self.lbl_member = Label(self.root, text="Total Members \n[ 0 ]",bd=5,relief=RIDGE,bg="#33bbf9", fg="white",font=("goudy old style",20,"bold"))
         self.lbl_member.place(x=300,y=120,height=150,width=300)
 
-        self.lbl_supplier = Label(self.root, text="Total Supplier \n[ 0 ]",bd=5,relief=RIDGE,bg="#33bbf9", fg="white",font=("goudy old style",20,"bold"))
+        self.lbl_supplier = Label(self.root, text="Total Supplier \n[ 0 ]",bd=5,relief=RIDGE,bg="lightblue", fg="white",font=("goudy old style",20,"bold"))
         self.lbl_supplier.place(x=650,y=120,height=150,width=300)
 
-        self.lbl_product = Label(self.root, text="Total Products \n[ 0 ]",bd=5,relief=RIDGE,bg="#33bbf9", fg="white",font=("goudy old style",20,"bold"))
+        self.lbl_product = Label(self.root, text="Total Products \n[ 0 ]",bd=5,relief=RIDGE,bg="green", fg="white",font=("goudy old style",20,"bold"))
         self.lbl_product.place(x=1000,y=120,height=150,width=300)
 
         # self.lbl_category = Label(self.root, text="Total Sales \n[ 0 ]",bd=5,relief=RIDGE,bg="#33bbf9", fg="white",font=("goudy old style",20,"bold"))
@@ -73,7 +73,7 @@ class IMS:
         
 
         # ==== footer ====
-        lbl_footer = Label(self.root, text="Inventory Management System | Team Third Axis", font=("times new roman", 12),bg="#4d636d",fg="white").pack(side=BOTTOM, fill=X)
+        lbl_footer = Label(self.root, text="Inventory Management System | Team Third Axis | GCOEJ", font=("times new roman", 12),bg="#4d636d",fg="white").pack(side=BOTTOM, fill=X)
 
         self.update_content()
 

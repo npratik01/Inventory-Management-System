@@ -1,5 +1,2 @@
-def update_datetime(self):
-        time_=time.strftime("%I:%M:%S")
-        date_=time.strftime("%d-%m-%Y")
-        self.lbl_clock.config(text=f"Welcome to Inventory Management System \t\t Date : {str(date_)} \t\t Time : {str(time_)} ")
-        self.lbl_clock.after(200,self.update_datetime)
+btn_upload = Button(product_Frame, text="Upload File",command=self.upload_file,font=("goudy old style", 15), bg="#4caf50", fg="white", cursor="hand2")
+        btn_upload.place(x=10, y=720, width=100, height=40)
