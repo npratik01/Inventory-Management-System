@@ -62,7 +62,7 @@ class IMS:
         self.lbl_supplier = Label(self.root, text="Total Supplier \n[ 0 ]",bd=5,relief=RIDGE,bg="lightblue", fg="white",font=("goudy old style",20,"bold"))
         self.lbl_supplier.place(x=650,y=120,height=150,width=300)
 
-        self.lbl_product = Label(self.root, text="Total Products \n[ 0 ]",bd=5,relief=RIDGE,bg="green", fg="white",font=("goudy old style",20,"bold"))
+        self.lbl_product = Label(self.root, text="Total Products \n[ 0 ]",bd=5,relief=RIDGE,bg="#ff00ff", fg="white",font=("goudy old style",20,"bold"))
         self.lbl_product.place(x=1000,y=120,height=150,width=300)
 
         # self.lbl_category = Label(self.root, text="Total Sales \n[ 0 ]",bd=5,relief=RIDGE,bg="#33bbf9", fg="white",font=("goudy old style",20,"bold"))
