@@ -27,10 +27,13 @@ def create_db():
                 [Current position] TEXT, 
                 [Current Mo No] TEXT,
                 pdf_file BLOB
+                PDF_path TEXT
                 
             )
         """)
     con.commit()
+
+    
     
     
 
