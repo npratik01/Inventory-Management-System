@@ -3,7 +3,6 @@ from PIL import Image, ImageTk
 from member import memberClass
 from product import productClass
 from supplier import supplierClass
-from sales import salesClass
 import sqlite3
 from tkinter import messagebox
 import time
@@ -91,10 +90,6 @@ class IMS:
     def supplier(self):
         self.new_win=Toplevel(self.root)
         self.new_obj=supplierClass(self.new_win)
-    
-    def sales(self):
-        self.new_win=Toplevel(self.root)
-        self.new_obj=salesClass(self.new_win)
 
     def update_content(self):
         con=sqlite3.connect(database=r'ims.db')
