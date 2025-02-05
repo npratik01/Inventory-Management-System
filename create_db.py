@@ -13,10 +13,10 @@ def create_db():
 
     cur.execute("""
             CREATE TABLE IF NOT EXISTS product(
-                Invoice_number INTEGER PRIMARY KEY AUTOINCREMENT, 
+                Invoice_number TEXT PRIMARY KEY , 
                 [Product Name] TEXT, 
                 [Invoice date] TEXT, 
-                Price INTEGER, 
+                Price TEXT, 
                 qty INTEGER,
                 [Total Invoice Amount] TEXT, 
                 [Supplier Name] TEXT, 
